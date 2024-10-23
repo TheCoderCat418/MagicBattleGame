@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
+  <tabs>
+    <Tab text="Menu">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+    <Tab text="Battle">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="24.0" layoutY="24.0" text="Health: " />
+                  <ProgressBar layoutX="24.0" layoutY="41.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+                  <ProgressBar layoutX="375.0" layoutY="444.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+                  <Label layoutX="375.0" layoutY="427.0" text="Health: " />
+                  <Slider blockIncrement="1.0" layoutX="17.0" layoutY="310.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" orientation="VERTICAL" prefHeight="234.0" prefWidth="14.0" showTickMarks="true" snapToTicks="true" value="1.0" />
+                  <AnchorPane layoutX="41.0" layoutY="317.0" prefHeight="237.0" prefWidth="224.0" style="-fx-border-radius: 1;">
+                     <children>
+                        <Button layoutX="1.0" layoutY="45.0" mnemonicParsing="false" text="MagicAbility 1" />
+                        <Button layoutX="133.0" layoutY="45.0" mnemonicParsing="false" text="MagicAbility 2" />
+                        <Button layoutX="1.0" layoutY="68.0" mnemonicParsing="false" text="MagicAbility 3" />
+                        <Button layoutX="133.0" layoutY="68.0" mnemonicParsing="false" text="MagicAbility 4" />
+                     </children>
+                  </AnchorPane>
+                  <ProgressBar layoutX="24.0" layoutY="76.0" prefWidth="200.0" progress="0.1" style="-fx-accent: purple;" />
+                  <Label layoutX="24.0" layoutY="59.0" text="Mana:" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Map">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="Manual">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+      <Tab text="???">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
