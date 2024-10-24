@@ -1,5 +1,6 @@
 package com.thecodercat418.MBG;
 
+import com.thecodercat418.MBG.Wands.FireWand;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,9 +14,15 @@ public class HelloController {
     @FXML
     private Button main;
 
+
+    //---//
+    MagicCharacter currentPlayer;
+
+    public void initialize(){
+        new FireWand();
+    }
     @FXML
     protected void mainOnClick() {
-        title.setText(txtInput.getText());
-        System.out.println(txtInput.getText());
+
     }
 }
