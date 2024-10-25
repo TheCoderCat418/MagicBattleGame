@@ -11,8 +11,5 @@ public class MagicCharacter extends BaseCharacter{
     public MagicCharacter(){
 
     }
-    @Override
-    public void attack(BaseCharacter characterBeingAttacked) {
 
-    }
 }

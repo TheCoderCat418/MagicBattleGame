@@ -6,11 +6,14 @@ import com.thecodercat418.MBG.Wands.Wand;
 
 import java.util.ArrayList;
 
-abstract class BaseCharacter{
-    int health = 0;
+public class BaseCharacter{
+    private int health = 100;
+    private int defence = 0;
     ArrayList<Item> items = new ArrayList<>();
 
+    public void modifyHealth(String healthModifier){
+
+    }
 
 
-    abstract void attack(BaseCharacter characterBeingAttacked);
 }

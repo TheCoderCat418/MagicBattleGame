@@ -1,0 +1,5 @@
+Spell:
+    SpellName:
+    WandLVLNeeded:
+    TurnCooldown:
+

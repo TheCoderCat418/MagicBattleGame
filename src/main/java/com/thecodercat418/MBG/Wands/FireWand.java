@@ -1,11 +1,14 @@
 package com.thecodercat418.MBG.Wands;
 
+import com.thecodercat418.MBG.DamageTypes;
+import com.thecodercat418.MBG.Spell;
+
 import java.util.ArrayList;
 
 public class FireWand extends Wand{
-    private ArrayList<WandLevel> wandLevels = new ArrayList<>();
     public FireWand(){
-        super("Fire Wand");
-        System.out.println(name);
+        name = "Fire Wand";
+        spells.clear();
+        spells.add(new Spell("Fire Ball", 0, 0, 1, "20", DamageTypes.FIRE, "+0", DamageTypes.NOT_SET));
     }
 }
