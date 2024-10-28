@@ -25,4 +25,6 @@ public class Spell {
         this.defence = defence;
         this.protectionType = protectionType;
     }
+
+    
 }

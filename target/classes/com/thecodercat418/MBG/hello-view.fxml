@@ -23,8 +23,8 @@
                   <ProgressBar layoutX="24.0" layoutY="41.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
                   <ProgressBar layoutX="375.0" layoutY="444.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
                   <Label layoutX="375.0" layoutY="427.0" text="Health: " />
-                  <Slider blockIncrement="1.0" layoutX="17.0" layoutY="310.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" orientation="VERTICAL" prefHeight="234.0" prefWidth="14.0" showTickMarks="true" snapToTicks="true" value="1.0" />
-                  <AnchorPane layoutX="41.0" layoutY="317.0" prefHeight="237.0" prefWidth="224.0" style="-fx-border-radius: 1;">
+                  <Slider fx:id="battleSlider" blockIncrement="1.0" layoutX="17.0" layoutY="310.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" orientation="VERTICAL" prefHeight="234.0" prefWidth="14.0" showTickMarks="true" snapToTicks="true" value="2.0" />
+                  <AnchorPane fx:id="battleAbilities" layoutX="41.0" layoutY="317.0" prefHeight="237.0" prefWidth="224.0" style="-fx-border-radius: 1;">
                      <children>
                         <Button layoutX="1.0" layoutY="45.0" mnemonicParsing="false" text="MagicAbility 1" />
                         <Button layoutX="133.0" layoutY="45.0" mnemonicParsing="false" text="MagicAbility 2" />

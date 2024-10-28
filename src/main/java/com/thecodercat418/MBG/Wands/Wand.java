@@ -21,4 +21,8 @@ public class Wand {
     public void castSpell(BaseCharacter characterToAttack, Spell spellToCast){
         characterToAttack.modifyHealth(spellToCast.damage);
     }
+
+    public String getName(){
+        return name;
+    }
 }
