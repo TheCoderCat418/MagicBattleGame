@@ -19,21 +19,24 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="24.0" layoutY="24.0" text="Health: " />
-                  <ProgressBar layoutX="24.0" layoutY="41.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
-                  <ProgressBar layoutX="375.0" layoutY="444.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
-                  <Label layoutX="375.0" layoutY="427.0" text="Health: " />
+                  <Label fx:id="playerHealth" layoutX="24.0" layoutY="24.0" text="Health: " />
+                  <ProgressBar fx:id="playerHealthBar" layoutX="24.0" layoutY="41.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+                  <ProgressBar fx:id="enemyHealthBar" layoutX="375.0" layoutY="444.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+                  <Label fx:id="enemyHealth" layoutX="375.0" layoutY="427.0" text="Health: " />
                   <Slider fx:id="battleSlider" blockIncrement="1.0" layoutX="17.0" layoutY="310.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" orientation="VERTICAL" prefHeight="234.0" prefWidth="14.0" showTickMarks="true" snapToTicks="true" value="2.0" />
                   <AnchorPane fx:id="battleAbilities" layoutX="41.0" layoutY="317.0" prefHeight="237.0" prefWidth="224.0" style="-fx-border-radius: 1;">
                      <children>
-                        <Button layoutX="1.0" layoutY="45.0" mnemonicParsing="false" text="MagicAbility 1" />
-                        <Button layoutX="133.0" layoutY="45.0" mnemonicParsing="false" text="MagicAbility 2" />
-                        <Button layoutX="1.0" layoutY="68.0" mnemonicParsing="false" text="MagicAbility 3" />
-                        <Button layoutX="133.0" layoutY="68.0" mnemonicParsing="false" text="MagicAbility 4" />
+                        <Button fx:id="MA1" disable="true" layoutX="1.0" layoutY="45.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
+                        <Button fx:id="MA2" disable="true" layoutX="133.0" layoutY="45.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
+                        <Button fx:id="MA3" disable="true" layoutX="1.0" layoutY="68.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
+                        <Button fx:id="MA4" disable="true" layoutX="133.0" layoutY="68.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
+                        <Button fx:id="doNothing" layoutX="69.0" layoutY="144.0" mnemonicParsing="false" onAction="#useAbility" text="Do Nothing" />
                      </children>
                   </AnchorPane>
-                  <ProgressBar layoutX="24.0" layoutY="76.0" prefWidth="200.0" progress="0.1" style="-fx-accent: purple;" />
-                  <Label layoutX="24.0" layoutY="59.0" text="Mana:" />
+                  <ProgressBar fx:id="playerManaBar" layoutX="24.0" layoutY="76.0" prefWidth="200.0" progress="0.1" style="-fx-accent: purple;" />
+                  <Label fx:id="playerMana" layoutX="24.0" layoutY="59.0" text="Mana:" />
+                  <Label layoutX="30.0" layoutY="102.0" text="You" />
+                  <Label fx:id="enemyName" layoutX="375.0" layoutY="410.0" text="PLAYERNAME" />
                </children></AnchorPane>
       </content>
     </Tab>

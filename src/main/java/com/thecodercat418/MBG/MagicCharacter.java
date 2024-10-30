@@ -10,11 +10,12 @@ public class MagicCharacter extends BaseCharacter{
     private Wand currentWand;
 
     public MagicCharacter(){
-
+        super("You");
     }
 
     public boolean addWand(Wand wand){
         for(Wand wand2 : wands){
+            //upcast? then downcast?
             if(wand.getName().equals(wand2.getName())){
                 return false;
             }
@@ -37,12 +38,24 @@ public class MagicCharacter extends BaseCharacter{
     public Wand getCurrentWand(){
         return currentWand;
     }
-    public void castSpell(String spellName, BaseCharacter victim){
+    public int castSpell(String spellName, BaseCharacter victim){
+        Spell currentSpell = null;
         for(Spell spell : currentWand.getSpells()){
             if(spell.spellName.equals(spellName)){
-                currentWand.castSpell(victim, spell);
+                currentSpell = spell;
             }
         }
-        
+        if(currentSpell == null){
+            return -2;
+        }
+        if(mana-currentSpell.manaNeeded<0){
+            return -1;
+        }
+        currentWand.castSpell(victim, currentSpell);
+        return 1;
     }
+    public int getMana(){
+        return mana;
+    }
+
 }

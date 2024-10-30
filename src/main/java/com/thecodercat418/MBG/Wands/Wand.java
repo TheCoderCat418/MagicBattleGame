@@ -25,4 +25,8 @@ public class Wand {
     public String getName(){
         return name;
     }
+
+    public int getWandLevel(){
+        return wandLevel;
+    }
 }

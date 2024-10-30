@@ -5,6 +5,7 @@ import com.thecodercat418.MBG.Wands.Wand;
 
 public class Spell {
     public String spellName;
+    public int manaNeeded;
     public int wandLevelNeeded;
     public int turnCooldown;
     public int lastsFor;
@@ -15,7 +16,7 @@ public class Spell {
     public DamageTypes protectionType;
 
 
-    public Spell(String spellName, int wandLevelNeeded, int turnCooldown, int lastsFor, String damage, DamageTypes damageType, String defence, DamageTypes protectionType) {
+    public Spell(String spellName, int wandLevelNeeded, int turnCooldown, int lastsFor, String damage, DamageTypes damageType, String defence, DamageTypes protectionType, int manaNeeded) {
         this.spellName = spellName;
         this.wandLevelNeeded = wandLevelNeeded;
         this.turnCooldown = turnCooldown;
@@ -24,6 +25,7 @@ public class Spell {
         this.lastsFor = lastsFor;
         this.defence = defence;
         this.protectionType = protectionType;
+        this.manaNeeded = manaNeeded;
     }
 
     
