@@ -53,13 +53,14 @@ public class MagicCharacter extends BaseCharacter{
             return -1;
         }
         currentWand.castSpell(victim, currentSpell);
+        mana = mana - currentSpell.manaNeeded;
         return 1;
     }
     public int getMana(){
         return mana;
     }
     @Override
-    public void finishTurn(){
+    public void startTurn(){
         mana += manaGain;
     }
 

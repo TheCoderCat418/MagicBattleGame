@@ -51,7 +51,7 @@ public class HelloController {
     BaseCharacter currentEnemy;
 
     public void initialize() {
-        battleSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+        battleSlider.valueProperty().addListener((_, _, newValue) -> {
             miniScreenSwitcher(newValue.intValue());
         });
 
@@ -66,15 +66,15 @@ public class HelloController {
     public void useAbility(ActionEvent aEvent){
         Button button = (Button) aEvent.getSource();
         if(button.getText().equals("Do Nothing")){
-            currentPlayer.finishTurn();
+            enemyTurn();
             updateStats();
             return;
         }
         if(currentPlayer.castSpell(button.getText(), currentEnemy) == -1){
             //Not enough mana
         }
-        currentPlayer.finishTurn();
         updateStats();
+        enemyTurn();
     }
 
     public void updateStats(){
@@ -84,6 +84,10 @@ public class HelloController {
         enemyHealth.setText(Integer.toString(currentEnemy.getHealth()));
         playerManaBar.setProgress((currentPlayer.getMana()+0.0)/10);
         playerMana.setText(Integer.toString(currentPlayer.getMana()));
+    }
+    public void enemyTurn(){
+        currentPlayer.startTurn();
+        updateStats();
     }
     public void loadBattle(BaseCharacter enemy) {
         enemyName.setText(enemy.getName());
