@@ -66,13 +66,14 @@ public class HelloController {
     public void useAbility(ActionEvent aEvent){
         Button button = (Button) aEvent.getSource();
         if(button.getText().equals("Do Nothing")){
-            //takeTurn
+            currentPlayer.finishTurn();
+            updateStats();
             return;
         }
         if(currentPlayer.castSpell(button.getText(), currentEnemy) == -1){
             //Not enough mana
         }
-    
+        currentPlayer.finishTurn();
         updateStats();
     }
 

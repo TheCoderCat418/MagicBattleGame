@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class MagicCharacter extends BaseCharacter{
     private int mana;
+    private int manaGain = 3;
     private ArrayList<Wand> wands = new ArrayList<>();
     private Wand currentWand;
 
@@ -56,6 +57,10 @@ public class MagicCharacter extends BaseCharacter{
     }
     public int getMana(){
         return mana;
+    }
+    @Override
+    public void finishTurn(){
+        mana += manaGain;
     }
 
 }

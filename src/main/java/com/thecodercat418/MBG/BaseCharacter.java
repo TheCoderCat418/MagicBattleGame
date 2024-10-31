@@ -46,5 +46,9 @@ public class BaseCharacter{
         return maxHealth;
     }
 
+    public void finishTurn(){
+        //passive healing
+    }
+
 
 }
