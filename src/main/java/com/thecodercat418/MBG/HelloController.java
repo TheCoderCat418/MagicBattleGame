@@ -3,50 +3,37 @@ package com.thecodercat418.MBG;
 import com.thecodercat418.MBG.Wands.FireWand;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
 public class HelloController {
-    @FXML
-    private Label title;
-    @FXML
-    private TextField txtInput;
-    @FXML
-    private Button main;
-    @FXML
     private AnchorPane battleAbilities;
-    @FXML
     private Slider battleSlider;
-    @FXML
     private Label enemyName;
-    @FXML
     private Button MA1;
-    @FXML
     private Button MA2;
-    @FXML
     private Button MA3;
-    @FXML
     private Button MA4;
-    @FXML
     private ProgressBar playerHealthBar;
-    @FXML
     private ProgressBar playerManaBar;
-    @FXML
     private ProgressBar enemyHealthBar;
-    @FXML
     private Label playerHealth;
-    @FXML
     private Label enemyHealth;
-    @FXML
     private Label playerMana;
+    private Label statusBar;
 
+    // --- //
+    public ListView<String> characters;
+    public ListView<String> starterWands;
+    public ListView<String> spells;
+    public TreeView<String> spellDetails;
 
-    // ---//
+    // --- //
     MagicCharacter currentPlayer;
     BaseCharacter currentEnemy;
 
@@ -63,7 +50,9 @@ public class HelloController {
         loadBattle(currentEnemy);
         updateStats();
     }
+
     public void useAbility(ActionEvent aEvent){
+        statusBar.setText("");
         Button button = (Button) aEvent.getSource();
         if(button.getText().equals("Do Nothing")){
             enemyTurn();
@@ -71,7 +60,8 @@ public class HelloController {
             return;
         }
         if(currentPlayer.castSpell(button.getText(), currentEnemy) == -1){
-            //Not enough mana
+            statusBar.setText("You do not have enough mana! It needs " + currentPlayer.getCurrentWand().findSpellByName(button.getText()) + " mana to be cast.");
+            return;
         }
         updateStats();
         enemyTurn();
@@ -118,6 +108,19 @@ public class HelloController {
         }
 
     }
+
+    // --- Menu/Character Selector --- //
+    public void menuInitialize(){
+        listLoader();
+    }
+    public void listLoader(){
+        characters.getItems().clear();
+        //get from file or website. most likly website http://magicbattlegame.thecodercat418.net/characters
+        characters.getItems().addAll("Dumbledore");
+    }
+
+
+
 
     public void miniScreenSwitcher(int screenId) {
         battleAbilities.setVisible(false);

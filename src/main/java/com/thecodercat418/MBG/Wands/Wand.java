@@ -29,4 +29,13 @@ public class Wand {
     public int getWandLevel(){
         return wandLevel;
     }
+
+    public Spell findSpellByName(String nameOfSpell){
+        for(Spell spell : getSpells()){
+            if(spell.spellName.equals(nameOfSpell)){
+                return spell;
+            }
+        }
+        return null;
+    }
 }

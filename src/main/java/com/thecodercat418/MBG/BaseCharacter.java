@@ -8,7 +8,6 @@ public class BaseCharacter{
     private int maxHealth = 100;
     private int health = 100;
     private int defence = 0;
-    private float defenceProtection = 0.5f;
     private boolean dead = false;
     private String name;
     ArrayList<Item> items = new ArrayList<>();
@@ -23,13 +22,12 @@ public class BaseCharacter{
     }
     public void modifyHealth(String healthModifier){
         if(healthModifier.charAt(0) == '-' && !dead){
-            int damageToTake = Integer.parseInt(healthModifier.substring(1));
-            int maxProtection = Integer.parseInt(healthModifier.substring(1)) * defenceProtection;
-            int protected = 0;
-            if(damageToTake-maxProtection)
-            
-            
-            if(defence-maxProtection<0)
+            if(defence >= Integer.parseInt(healthModifier.substring(1))){
+                defence -= Integer.parseInt(healthModifier.substring(1));
+            }else{
+                health = health - Integer.parseInt(healthModifier.substring(1)) + defence;
+                defence = 0;
+            }
         }
 
         if(health<=0){

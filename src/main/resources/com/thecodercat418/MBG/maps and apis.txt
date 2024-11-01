@@ -1,0 +1,3 @@
+# this file will be used as an api tracker to keep my head stable
+
+$DOMAIN: magicbattlegame.thecodercat418.net

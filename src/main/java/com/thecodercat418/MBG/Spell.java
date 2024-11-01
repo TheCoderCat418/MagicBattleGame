@@ -1,6 +1,5 @@
 package com.thecodercat418.MBG;
 
-import com.thecodercat418.MBG.Wands.Wand;
 
 
 public class Spell {
