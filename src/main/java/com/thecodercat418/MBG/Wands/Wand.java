@@ -10,29 +10,29 @@ public class Wand {
     protected String name;
     protected ArrayList<Spell> spells = new ArrayList<>();
 
-    protected Wand(){
+    protected Wand() {
 
     }
 
-    public Spell[] getSpells(){
+    public Spell[] getSpells() {
         return spells.toArray(new Spell[spells.size()]);
     }
 
-    public void castSpell(BaseCharacter characterToAttack, Spell spellToCast){
+    public void castSpell(BaseCharacter characterToAttack, Spell spellToCast) {
         characterToAttack.modifyHealth(spellToCast.damage);
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public int getWandLevel(){
+    public int getWandLevel() {
         return wandLevel;
     }
 
-    public Spell findSpellByName(String nameOfSpell){
-        for(Spell spell : getSpells()){
-            if(spell.spellName.equals(nameOfSpell)){
+    public Spell findSpellByName(String nameOfSpell) {
+        for (Spell spell : getSpells()) {
+            if (spell.spellName.equals(nameOfSpell)) {
                 return spell;
             }
         }

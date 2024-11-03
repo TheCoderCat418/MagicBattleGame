@@ -11,79 +11,113 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
-  <tabs>
-    <Tab text="Menu">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+   prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE"
+   xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="com.thecodercat418.MBG.HelloController">
+   <tabs>
+      <Tab text="Menu">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="starterWands" layoutX="214.0" layoutY="83.0" prefHeight="200.0" prefWidth="172.0" />
-                  <ListView fx:id="characters" layoutX="14.0" layoutY="83.0" prefHeight="200.0" prefWidth="200.0" />
-                  <ListView fx:id="spells" layoutX="386.0" layoutY="83.0" prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="starterWands" layoutX="214.0" layoutY="83.0" prefHeight="200.0"
+                     prefWidth="172.0" />
+                  <ListView fx:id="characters" layoutX="14.0" layoutY="83.0" prefHeight="200.0"
+                     prefWidth="200.0" />
+                  <ListView fx:id="spells" layoutX="386.0" layoutY="83.0" prefHeight="200.0"
+                     prefWidth="200.0" />
                   <Button layoutX="188.0" layoutY="490.0" mnemonicParsing="false" text="Button" />
                   <Label layoutX="86.0" layoutY="66.0" text="Characters" />
                   <Label layoutX="263.0" layoutY="66.0" text="Starter Wands" />
                   <Label layoutX="471.0" layoutY="66.0" text="Spells" />
-                  <TreeView fx:id="spellDetails" layoutX="386.0" layoutY="315.0" prefHeight="200.0" prefWidth="200.0" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Battle">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <TreeView fx:id="spellDetails" layoutX="386.0" layoutY="315.0" prefHeight="200.0"
+                     prefWidth="200.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Battle">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Label fx:id="playerHealth" layoutX="24.0" layoutY="24.0" text="Health: " />
-                  <ProgressBar fx:id="playerHealthBar" layoutX="24.0" layoutY="41.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
-                  <ProgressBar fx:id="enemyHealthBar" layoutX="375.0" layoutY="444.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+                  <ProgressBar fx:id="playerHealthBar" layoutX="24.0" layoutY="41.0"
+                     prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+                  <ProgressBar fx:id="enemyHealthBar" layoutX="375.0" layoutY="444.0"
+                     prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
                   <Label fx:id="enemyHealth" layoutX="375.0" layoutY="427.0" text="Health: " />
-                  <Slider fx:id="battleSlider" blockIncrement="1.0" layoutX="17.0" layoutY="310.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" orientation="VERTICAL" prefHeight="234.0" prefWidth="14.0" showTickMarks="true" snapToTicks="true" value="2.0" />
-                  <AnchorPane fx:id="battleAbilities" layoutX="41.0" layoutY="317.0" prefHeight="237.0" prefWidth="224.0" style="-fx-border-radius: 1;">
+                  <Slider fx:id="battleSlider" blockIncrement="1.0" layoutX="17.0" layoutY="310.0"
+                     majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0"
+                     orientation="VERTICAL" prefHeight="234.0" prefWidth="14.0" showTickMarks="true"
+                     snapToTicks="true" value="2.0" />
+                  <AnchorPane fx:id="battleAbilities" layoutX="41.0" layoutY="317.0"
+                     prefHeight="237.0" prefWidth="224.0" style="-fx-border-radius: 1;">
                      <children>
-                        <Button fx:id="MA1" disable="true" layoutY="2.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="117.0" text="N/A" />
-                        <Button fx:id="MA2" disable="true" layoutX="118.0" layoutY="2.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="106.0" text="N/A" />
-                        <Button fx:id="MA3" disable="true" layoutX="1.0" layoutY="119.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="112.0" text="N/A" />
-                        <Button fx:id="MA4" disable="true" layoutX="114.0" layoutY="119.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="115.0" text="N/A" />
-                        <Button fx:id="doNothing" layoutX="59.0" layoutY="222.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="19.0" prefWidth="87.0" text="Do Nothing" textOverrun="CLIP" />
-                        <Label fx:id="SMA1" alignment="CENTER" layoutX="1.0" layoutY="27.0" prefHeight="91.0" prefWidth="114.0" text="N/A">
+                        <Button fx:id="MA1" disable="true" layoutY="2.0" mnemonicParsing="false"
+                           onAction="#useAbility" prefHeight="25.0" prefWidth="117.0" text="N/A" />
+                        <Button fx:id="MA2" disable="true" layoutX="118.0" layoutY="2.0"
+                           mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0"
+                           prefWidth="106.0" text="N/A" />
+                        <Button fx:id="MA3" disable="true" layoutX="1.0" layoutY="119.0"
+                           mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0"
+                           prefWidth="112.0" text="N/A" />
+                        <Button fx:id="MA4" disable="true" layoutX="114.0" layoutY="119.0"
+                           mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0"
+                           prefWidth="115.0" text="N/A" />
+                        <Button fx:id="doNothing" layoutX="59.0" layoutY="222.0"
+                           mnemonicParsing="false" onAction="#useAbility" prefHeight="19.0"
+                           prefWidth="87.0" text="Do Nothing" textOverrun="CLIP" />
+                        <Label fx:id="SMA1" alignment="CENTER" layoutX="1.0" layoutY="27.0"
+                           prefHeight="91.0" prefWidth="114.0" text="N/A">
                            <font>
                               <Font size="10.0" />
-                           </font></Label>
-                        <Label fx:id="SMA2" alignment="CENTER" layoutX="114.0" layoutY="27.0" prefHeight="91.0" prefWidth="110.0" text="N/A">
+                           </font>
+                        </Label>
+                        <Label fx:id="SMA2" alignment="CENTER" layoutX="114.0" layoutY="27.0"
+                           prefHeight="91.0" prefWidth="110.0" text="N/A">
                            <font>
                               <Font size="10.0" />
-                           </font></Label>
-                        <Label fx:id="SMA4" alignment="CENTER" layoutX="113.0" layoutY="144.0" prefHeight="79.0" prefWidth="111.0" text="N/A">
+                           </font>
+                        </Label>
+                        <Label fx:id="SMA4" alignment="CENTER" layoutX="113.0" layoutY="144.0"
+                           prefHeight="79.0" prefWidth="111.0" text="N/A">
                            <font>
                               <Font size="10.0" />
-                           </font></Label>
-                        <Label fx:id="SMA3" alignment="CENTER" layoutX="2.0" layoutY="144.0" prefHeight="79.0" prefWidth="112.0" text="N/A">
+                           </font>
+                        </Label>
+                        <Label fx:id="SMA3" alignment="CENTER" layoutX="2.0" layoutY="144.0"
+                           prefHeight="79.0" prefWidth="112.0" text="N/A">
                            <font>
                               <Font size="10.0" />
-                           </font></Label>
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
-                  <ProgressBar fx:id="playerManaBar" layoutX="24.0" layoutY="76.0" prefWidth="200.0" progress="0.1" style="-fx-accent: purple;" />
+                  <ProgressBar fx:id="playerManaBar" layoutX="24.0" layoutY="76.0" prefWidth="200.0"
+                     progress="0.1" style="-fx-accent: purple;" />
                   <Label fx:id="playerMana" layoutX="24.0" layoutY="59.0" text="Mana:" />
                   <Label layoutX="30.0" layoutY="102.0" text="You" />
                   <Label fx:id="enemyName" layoutX="375.0" layoutY="410.0" text="PLAYERNAME" />
-                  <Label fx:id="statusBar" layoutX="300.0" layoutY="24.0" prefHeight="16.0" prefWidth="283.0" />
-               </children></AnchorPane>
-      </content>
-    </Tab>
+                  <Label fx:id="statusBar" layoutX="300.0" layoutY="24.0" prefHeight="16.0"
+                     prefWidth="283.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
       <Tab text="Map">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
       </Tab>
       <Tab text="Manual">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
       </Tab>
       <Tab text="???">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-  </tabs>
+   </tabs>
 </TabPane>
