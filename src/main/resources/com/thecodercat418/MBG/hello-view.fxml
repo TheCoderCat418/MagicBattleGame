@@ -9,8 +9,9 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
   <tabs>
     <Tab text="Menu">
       <content>
@@ -38,11 +39,27 @@
                   <Slider fx:id="battleSlider" blockIncrement="1.0" layoutX="17.0" layoutY="310.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="0" orientation="VERTICAL" prefHeight="234.0" prefWidth="14.0" showTickMarks="true" snapToTicks="true" value="2.0" />
                   <AnchorPane fx:id="battleAbilities" layoutX="41.0" layoutY="317.0" prefHeight="237.0" prefWidth="224.0" style="-fx-border-radius: 1;">
                      <children>
-                        <Button fx:id="MA1" disable="true" layoutX="1.0" layoutY="45.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
-                        <Button fx:id="MA2" disable="true" layoutX="133.0" layoutY="45.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
-                        <Button fx:id="MA3" disable="true" layoutX="1.0" layoutY="68.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
-                        <Button fx:id="MA4" disable="true" layoutX="133.0" layoutY="68.0" mnemonicParsing="false" onAction="#useAbility" text="No ability" />
-                        <Button fx:id="doNothing" layoutX="69.0" layoutY="144.0" mnemonicParsing="false" onAction="#useAbility" text="Do Nothing" />
+                        <Button fx:id="MA1" disable="true" layoutY="2.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="117.0" text="N/A" />
+                        <Button fx:id="MA2" disable="true" layoutX="118.0" layoutY="2.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="106.0" text="N/A" />
+                        <Button fx:id="MA3" disable="true" layoutX="1.0" layoutY="119.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="112.0" text="N/A" />
+                        <Button fx:id="MA4" disable="true" layoutX="114.0" layoutY="119.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="25.0" prefWidth="115.0" text="N/A" />
+                        <Button fx:id="doNothing" layoutX="59.0" layoutY="222.0" mnemonicParsing="false" onAction="#useAbility" prefHeight="19.0" prefWidth="87.0" text="Do Nothing" textOverrun="CLIP" />
+                        <Label fx:id="SMA1" alignment="CENTER" layoutX="1.0" layoutY="27.0" prefHeight="91.0" prefWidth="114.0" text="N/A">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
+                        <Label fx:id="SMA2" alignment="CENTER" layoutX="114.0" layoutY="27.0" prefHeight="91.0" prefWidth="110.0" text="N/A">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
+                        <Label fx:id="SMA4" alignment="CENTER" layoutX="113.0" layoutY="144.0" prefHeight="79.0" prefWidth="111.0" text="N/A">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
+                        <Label fx:id="SMA3" alignment="CENTER" layoutX="2.0" layoutY="144.0" prefHeight="79.0" prefWidth="112.0" text="N/A">
+                           <font>
+                              <Font size="10.0" />
+                           </font></Label>
                      </children>
                   </AnchorPane>
                   <ProgressBar fx:id="playerManaBar" layoutX="24.0" layoutY="76.0" prefWidth="200.0" progress="0.1" style="-fx-accent: purple;" />

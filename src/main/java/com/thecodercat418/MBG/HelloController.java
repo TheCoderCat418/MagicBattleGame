@@ -3,6 +3,7 @@ package com.thecodercat418.MBG;
 import com.thecodercat418.MBG.Wands.FireWand;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -12,30 +13,58 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 
 public class HelloController {
+    @FXML
     private AnchorPane battleAbilities;
+    @FXML
     private Slider battleSlider;
+    @FXML
     private Label enemyName;
+    @FXML
     private Button MA1;
+    @FXML
     private Button MA2;
+    @FXML
     private Button MA3;
+    @FXML
     private Button MA4;
+    @FXML
+    private Label SMA1;
+    @FXML
+    private Label SMA2;
+    @FXML
+    private Label SMA3;
+    @FXML
+    private Label SMA4;
+    @FXML
     private ProgressBar playerHealthBar;
+    @FXML
     private ProgressBar playerManaBar;
+    @FXML
     private ProgressBar enemyHealthBar;
+    @FXML
     private Label playerHealth;
+    @FXML
     private Label enemyHealth;
+    @FXML
     private Label playerMana;
+    @FXML
     private Label statusBar;
 
     // --- //
+    @FXML
     public ListView<String> characters;
+    @FXML
     public ListView<String> starterWands;
+    @FXML
     public ListView<String> spells;
+    @FXML
     public TreeView<String> spellDetails;
 
     // --- //
     MagicCharacter currentPlayer;
     BaseCharacter currentEnemy;
+
+    String STATE = "BATTLE";
 
     public void initialize() {
         battleSlider.valueProperty().addListener((_, _, newValue) -> {
@@ -48,79 +77,127 @@ public class HelloController {
         currentPlayer = new MagicCharacter();
         currentPlayer.addWand(new FireWand());
         loadBattle(currentEnemy);
-        updateStats();
+        updateBattle();
     }
 
-    public void useAbility(ActionEvent aEvent){
+    public void useAbility(ActionEvent aEvent) {
         statusBar.setText("");
         Button button = (Button) aEvent.getSource();
-        if(button.getText().equals("Do Nothing")){
+        if (button.getText().equals("Do Nothing")) {
+            currentPlayer.finishTurn();
             enemyTurn();
-            updateStats();
+            updateBattle();
             return;
         }
-        if(currentPlayer.castSpell(button.getText(), currentEnemy) == -1){
-            statusBar.setText("You do not have enough mana! It needs " + currentPlayer.getCurrentWand().findSpellByName(button.getText()) + " mana to be cast.");
-            return;
-        }
-        updateStats();
+        currentPlayer.finishTurn();
+        currentPlayer.castSpell(button.getText(), currentEnemy);
+        updateBattle();
         enemyTurn();
     }
 
-    public void updateStats(){
+    public void updateBattle() {
         playerHealth.setText(Integer.toString(currentPlayer.getHealth()));
-        playerHealthBar.setProgress((currentPlayer.getHealth()+0.0)/currentPlayer.getMaxHealth());
-        enemyHealthBar.setProgress((currentEnemy.getHealth()+0.0)/currentEnemy.getMaxHealth());
+        playerHealthBar.setProgress((currentPlayer.getHealth() + 0.0) / currentPlayer.getMaxHealth());
+        enemyHealthBar.setProgress((currentEnemy.getHealth() + 0.0) / currentEnemy.getMaxHealth());
         enemyHealth.setText(Integer.toString(currentEnemy.getHealth()));
-        playerManaBar.setProgress((currentPlayer.getMana()+0.0)/10);
+        playerManaBar.setProgress((currentPlayer.getMana() + 0.0) / 10);
         playerMana.setText(Integer.toString(currentPlayer.getMana()));
+        loadActionTable();
     }
-    public void enemyTurn(){
+
+    public void enemyTurn() {
         currentPlayer.startTurn();
-        updateStats();
+        updateBattle();
     }
-    public void loadBattle(BaseCharacter enemy) {
-        enemyName.setText(enemy.getName());
-        int track = 1;
-        for (Spell spell : currentPlayer.getCurrentWand().getSpells()) {
-            // MUST IMPLEMENT SPELL EFFECT FOR PROPER COOLDOWN TRACKING
+
+    public void loadActionTable() {
+        int track = 0;
+        for (int i = 0; i < currentPlayer.getCurrentWand().getSpells().length; i++) {
+            Spell currentSpell = currentPlayer.getCurrentWand().getSpells()[i];
+            boolean cooldown = currentPlayer.getSpellEffectFromSpell(currentSpell) != null;
+            boolean mana = currentPlayer.getMana() < currentSpell.manaNeeded;
+            boolean locked = currentPlayer.getCurrentWand().getWandLevel() < currentSpell.wandLevelNeeded;
             Button button = null;
+            Label label = null;
             switch (track) {
-                case 1:
+                case 0:
                     button = MA1;
+                    label = SMA1;
+                    break;
+                case 1:
+                    button = MA2;
+                    label = SMA2;
                     break;
                 case 2:
-                    button = MA2;
+                    button = MA3;
+                    label = SMA3;
                     break;
                 case 3:
-                    button = MA3;
-                    break;
-                case 4:
                     button = MA4;
+                    label = SMA4;
                     break;
             }
-            button.setText(spell.spellName);
+            button.setText(currentPlayer.getCurrentWand().getSpells()[i].spellName);
             button.setDisable(false);
-            if (spell.wandLevelNeeded > currentPlayer.getCurrentWand().getWandLevel()) {
+            label.setText("Ready.");
+            if (mana) {
+                label.setText("Not Enough Mana! \nYou need " + currentSpell.manaNeeded + " mana!");
+                button.setDisable(true);
+            }
+            if (cooldown) {
+                label.setText("On Cooldown! \nTurns of cooldown left: "
+                        + currentPlayer.getSpellEffectFromSpell(currentSpell).remainingCooldown + "\n "
+                        + currentPlayer.getSpellEffectFromSpell(currentSpell).hasEffect());
+                button.setDisable(true);
+            }
+            if (locked) {
+                label.setText("It's Locked! Wand level needed: " + currentSpell.wandLevelNeeded);
                 button.setDisable(true);
             }
             track++;
         }
+        for (int i = track; i < 4; i++) {
+            Button button = null;
+            Label label = null;
+            switch (i) {
+                case 0:
+                    button = MA1;
+                    label = SMA1;
+                    break;
+                case 1:
+                    button = MA2;
+                    label = SMA2;
+                    break;
+                case 2:
+                    button = MA3;
+                    label = SMA3;
+                    break;
+                case 3:
+                    button = MA4;
+                    label = SMA4;
+                    break;
+            }
+            button.setText("No Ability");
+            label.setText("");
+        }
+    }
 
+    public void loadBattle(BaseCharacter enemy) {
+        enemyName.setText(enemy.getName());
+        currentEnemy = enemy;
     }
 
     // --- Menu/Character Selector --- //
-    public void menuInitialize(){
+    public void menuInitialize() {
         listLoader();
     }
-    public void listLoader(){
+
+    public void listLoader() {
         characters.getItems().clear();
-        //get from file or website. most likly website http://magicbattlegame.thecodercat418.net/characters
+        // get from file or website. most likly website
+        // http://magicbattlegame.thecodercat418.net/characters
         characters.getItems().addAll("Dumbledore");
     }
-
-
-
 
     public void miniScreenSwitcher(int screenId) {
         battleAbilities.setVisible(false);

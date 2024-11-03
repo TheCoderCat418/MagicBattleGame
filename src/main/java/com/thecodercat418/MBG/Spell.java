@@ -8,6 +8,7 @@ public class Spell {
     public int wandLevelNeeded;
     public int turnCooldown;
     public int lastsFor;
+    public RunningPlacement runningPlacement;
     public String damage;
     public DamageTypes damageType;
 
@@ -15,7 +16,7 @@ public class Spell {
     public DamageTypes protectionType;
 
 
-    public Spell(String spellName, int wandLevelNeeded, int turnCooldown, int lastsFor, String damage, DamageTypes damageType, String defence, DamageTypes protectionType, int manaNeeded) {
+    public Spell(String spellName, int wandLevelNeeded, int turnCooldown, int lastsFor, String damage, DamageTypes damageType, String defence, DamageTypes protectionType, int manaNeeded, RunningPlacement runningPlacement) {
         this.spellName = spellName;
         this.wandLevelNeeded = wandLevelNeeded;
         this.turnCooldown = turnCooldown;
@@ -25,6 +26,7 @@ public class Spell {
         this.defence = defence;
         this.protectionType = protectionType;
         this.manaNeeded = manaNeeded;
+        this.runningPlacement = runningPlacement;
     }
 
     

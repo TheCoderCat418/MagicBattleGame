@@ -5,5 +5,32 @@ public class SpellEffect {
     public int remainingCooldown;
     public RunningPlacement runningPlacement;
     public int turnCooldown;
-    //public ? cooldownType; possibly would allow more than just the single spell to be deactivated.
+    public int runFor;
+    
+    public SpellEffect(Spell spell, RunningPlacement rp){
+        originalSpell = spell;
+        turnCooldown = spell.turnCooldown;
+        remainingCooldown = turnCooldown;
+        runningPlacement = rp;
+        this.runFor = spell.lastsFor;
+    }
+   
+    public boolean isDead(){
+        return remainingCooldown <= 0;
+    }
+
+    public void turn(){
+        remainingCooldown--;
+        runFor--;
+    }
+
+    public Spell getSpell(){
+        return originalSpell;
+    }
+
+    public boolean hasEffect(){
+        return runFor > 0;
+    }
+
+    
 }
