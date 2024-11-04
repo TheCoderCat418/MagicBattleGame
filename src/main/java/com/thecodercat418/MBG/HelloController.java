@@ -49,6 +49,8 @@ public class HelloController {
     private Label playerMana;
     @FXML
     private Label statusBar;
+    @FXML
+    private AnchorPane battleItems;
 
     // --- //
     @FXML
@@ -141,17 +143,17 @@ public class HelloController {
             button.setDisable(false);
             label.setText("Ready.");
             if (mana) {
-                label.setText("Not Enough Mana! \nYou need " + currentSpell.manaNeeded + " mana!");
+                label.setText("Not Enough Mana!\nYou need " + currentSpell.manaNeeded + " mana!");
                 button.setDisable(true);
             }
             if (cooldown) {
-                label.setText("On Cooldown! \nTurns of cooldown left: "
+                label.setText("On Cooldown!\nTurns of cooldown left: "
                         + currentPlayer.getSpellEffectFromSpell(currentSpell).remainingCooldown + "\n "
                         + currentPlayer.getSpellEffectFromSpell(currentSpell).hasEffect());
                 button.setDisable(true);
             }
             if (locked) {
-                label.setText("It's Locked! Wand level needed: " + currentSpell.wandLevelNeeded);
+                label.setText("It's Locked!\nWand level needed: " + currentSpell.wandLevelNeeded);
                 button.setDisable(true);
             }
             track++;
@@ -201,10 +203,12 @@ public class HelloController {
 
     public void miniScreenSwitcher(int screenId) {
         battleAbilities.setVisible(false);
+        battleItems.setVisible(false);
         // Screen 1: Abilities
         if (screenId == 1) {
             battleAbilities.setVisible(true);
-        } else {
+        } else if(screenId == 2) {
+            battleItems.setVisible(true);
 
         }
     }
