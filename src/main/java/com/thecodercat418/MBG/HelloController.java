@@ -1,16 +1,21 @@
 package com.thecodercat418.MBG;
 
+import com.thecodercat418.MBG.Items.Item;
 import com.thecodercat418.MBG.Wands.FireWand;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class HelloController {
     @FXML
@@ -51,6 +56,11 @@ public class HelloController {
     private Label statusBar;
     @FXML
     private AnchorPane battleItems;
+    @FXML 
+    public Pane templateItem;
+    @FXML
+    public ScrollPane scrollBattleItems;
+
 
     // --- //
     @FXML
@@ -61,6 +71,7 @@ public class HelloController {
     public ListView<String> spells;
     @FXML
     public TreeView<String> spellDetails;
+    
 
     // --- //
     MagicCharacter currentPlayer;
@@ -78,6 +89,13 @@ public class HelloController {
 
         currentPlayer = new MagicCharacter();
         currentPlayer.addWand(new FireWand());
+        currentPlayer.items.add(new Item("Test 1", null));
+        currentPlayer.items.add(new Item("Test 2", null));
+        currentPlayer.items.add(new Item("Test 3", null));
+        currentPlayer.items.add(new Item("Test 4", null));
+        currentPlayer.items.add(new Item("Test 5", null));
+        currentPlayer.items.add(new Item("Test 6", null));
+        currentPlayer.items.add(new Item("Test 7", null));
         loadBattle(currentEnemy);
         updateBattle();
     }
@@ -105,6 +123,7 @@ public class HelloController {
         playerManaBar.setProgress((currentPlayer.getMana() + 0.0) / 10);
         playerMana.setText(Integer.toString(currentPlayer.getMana()));
         loadActionTable();
+        loadItemTable();
     }
 
     public void enemyTurn() {
@@ -183,7 +202,66 @@ public class HelloController {
             label.setText("");
         }
     }
+    public void loadItemTable(){
+        AnchorPane base = (AnchorPane)(scrollBattleItems.getContent());
+        base.getChildren().clear();
+        
+        int layer = 0;
+        for(int i = 0; i<currentPlayer.items.size(); i++){
+            Item item = currentPlayer.items.get(i);
+            Pane itemPane = new Pane();
+            itemPane.setStyle("-fx-background-color: red");
+            itemPane.setPrefSize(100.0, 100.0);
+            itemPane.setLayoutY(114.0*layer);
+            if(i % 2 == 1){
+                itemPane.setLayoutX(114.0);
+            }
 
+            Label name = new Label(item.name);
+            name.setAlignment(Pos.CENTER);
+            name.setLayoutX(6.0);
+            name.setLayoutY(50.0);
+            name.setPrefHeight(17.0);
+            name.setPrefWidth(90.0);
+
+            Button select = new Button("Select");
+            select.setLayoutX(14.0);
+            select.setLayoutY(67.0);
+            select.setMnemonicParsing(false);
+            select.setPrefHeight(25.0);
+            select.setPrefWidth(75.0);
+
+            ImageView imageView = new ImageView(item.image);
+            imageView.setFitHeight(41.0);
+            imageView.setFitWidth(44.0);
+            imageView.setLayoutX(29.0);
+            imageView.setLayoutY(9.0);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+
+            itemPane.getChildren().clear();
+            itemPane.getChildren().addAll(name, select, imageView);
+            base.getChildren().add(itemPane);
+            System.out.println(layer);
+            if(i % 2 == 1){
+                layer++;
+            }
+            if(i == currentPlayer.items.size()-1 && i % 2 == 1){
+                layer++;
+            }
+            System.out.println(layer);
+            
+        }
+        base.setPrefHeight(100.0 * layer + 14.0 * layer);
+        System.out.println(base.getPrefHeight());
+        
+    }
+    public void itemSelect(){
+
+    }
+    public void useItem(){
+
+    }
     public void loadBattle(BaseCharacter enemy) {
         enemyName.setText(enemy.getName());
         currentEnemy = enemy;
@@ -209,7 +287,6 @@ public class HelloController {
             battleAbilities.setVisible(true);
         } else if(screenId == 2) {
             battleItems.setVisible(true);
-
         }
     }
 }
