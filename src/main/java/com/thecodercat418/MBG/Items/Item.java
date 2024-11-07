@@ -8,6 +8,7 @@ public class Item {
     public String name;
     public SpellEffect effect;
     public Image image;
+    public String description;
 
     public Item(String name, SpellEffect effect){
         this.name = name;

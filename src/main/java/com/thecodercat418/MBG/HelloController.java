@@ -6,6 +6,7 @@ import com.thecodercat418.MBG.Wands.FireWand;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -56,12 +57,14 @@ public class HelloController {
     private Label statusBar;
     @FXML
     private AnchorPane battleItems;
-    @FXML 
+    @FXML
     public Pane templateItem;
     @FXML
     public ScrollPane scrollBattleItems;
-
-
+    @FXML
+    public Button useItem;
+    @FXML
+    public Label itemDetailText;
     // --- //
     @FXML
     public ListView<String> characters;
@@ -71,11 +74,11 @@ public class HelloController {
     public ListView<String> spells;
     @FXML
     public TreeView<String> spellDetails;
-    
 
     // --- //
     MagicCharacter currentPlayer;
     BaseCharacter currentEnemy;
+    Item currentItem;
 
     String STATE = "BATTLE";
 
@@ -95,7 +98,7 @@ public class HelloController {
         currentPlayer.items.add(new Item("Test 4", null));
         currentPlayer.items.add(new Item("Test 5", null));
         currentPlayer.items.add(new Item("Test 6", null));
-        currentPlayer.items.add(new Item("Test 7", null));
+        // currentPlayer.items.add(new Item("Test 7", null));
         loadBattle(currentEnemy);
         updateBattle();
     }
@@ -202,18 +205,23 @@ public class HelloController {
             label.setText("");
         }
     }
-    public void loadItemTable(){
-        AnchorPane base = (AnchorPane)(scrollBattleItems.getContent());
+
+    public void loadItemDetails() {
+        itemDetailText.setText(currentItem.name + "\n\n" + currentItem.description);
+    }
+
+    public void loadItemTable() {
+        AnchorPane base = (AnchorPane) (scrollBattleItems.getContent());
         base.getChildren().clear();
-        
+
         int layer = 0;
-        for(int i = 0; i<currentPlayer.items.size(); i++){
+        for (int i = 0; i < currentPlayer.items.size(); i++) {
             Item item = currentPlayer.items.get(i);
             Pane itemPane = new Pane();
             itemPane.setStyle("-fx-background-color: red");
             itemPane.setPrefSize(100.0, 100.0);
-            itemPane.setLayoutY(114.0*layer);
-            if(i % 2 == 1){
+            itemPane.setLayoutY(114.0 * layer);
+            if (i % 2 == 1) {
                 itemPane.setLayoutX(114.0);
             }
 
@@ -231,6 +239,21 @@ public class HelloController {
             select.setPrefHeight(25.0);
             select.setPrefWidth(75.0);
 
+            select.setOnAction((ae) -> {
+                Button b = (Button) ae.getSource();
+                for (Node node : b.getParent().getChildrenUnmodifiable()) {
+                    if (node instanceof Label) {
+                        for (Item itemb : currentPlayer.items) {
+                            if (((Label) node).getText().equals(itemb.name)) {
+                                currentItem = itemb;
+                                loadItemDetails();
+                                return;
+                            }
+                        }
+                    }
+                }
+            });
+
             ImageView imageView = new ImageView(item.image);
             imageView.setFitHeight(41.0);
             imageView.setFitWidth(44.0);
@@ -242,26 +265,28 @@ public class HelloController {
             itemPane.getChildren().clear();
             itemPane.getChildren().addAll(name, select, imageView);
             base.getChildren().add(itemPane);
-            System.out.println(layer);
-            if(i % 2 == 1){
+            if (i % 2 == 1) {
                 layer++;
             }
-            if(i == currentPlayer.items.size()-1 && i % 2 == 1){
+            if (i == currentPlayer.items.size() - 1 && i % 2 == 0) {
                 layer++;
             }
-            System.out.println(layer);
-            
+
         }
-        base.setPrefHeight(100.0 * layer + 14.0 * layer);
-        System.out.println(base.getPrefHeight());
-        
+        base.setPrefHeight(100.0 * layer + 14.0 * (layer - 1));
     }
-    public void itemSelect(){
 
+    public void useItem() {
+        currentPlayer.addSpellEffect(currentItem.effect);
+        for(Item item : currentPlayer.items){
+            if(currentItem.equals(item)){
+                currentPlayer.items.remove(item);
+                break;
+            }
+        }
+        currentItem = null;
     }
-    public void useItem(){
 
-    }
     public void loadBattle(BaseCharacter enemy) {
         enemyName.setText(enemy.getName());
         currentEnemy = enemy;
@@ -285,7 +310,7 @@ public class HelloController {
         // Screen 1: Abilities
         if (screenId == 1) {
             battleAbilities.setVisible(true);
-        } else if(screenId == 2) {
+        } else if (screenId == 2) {
             battleItems.setVisible(true);
         }
     }

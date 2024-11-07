@@ -10,6 +10,7 @@ public class BaseCharacter {
     private int defence = 0;
     private boolean dead = false;
     private String name;
+    private ArrayList<SpellEffect> spellEffects = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
 
     public BaseCharacter(String name, int health, int defence) {
@@ -38,6 +39,13 @@ public class BaseCharacter {
         }
     }
 
+    public void proccessSpell(Spell spell){
+        //Defence Proccess
+        
+        //Damage Proccess
+        
+    }
+
     public int getHealth() {
         return health;
     }
@@ -50,12 +58,26 @@ public class BaseCharacter {
         return maxHealth;
     }
 
-    public void finishTurn() {
+    public void startTurn() {
         // passive healing
     }
 
-    public void startTurn() {
-        // passive healing
+    public void finishTurn() {
+        for (int i = spellEffects.size() - 1; i >= 0; i--) {
+            proccessSpell(spellEffects.get(i).originalSpell);
+            spellEffects.get(i).turn();
+            if (spellEffects.get(i).isDead()) {
+                spellEffects.remove(i);
+            }
+        }
+    }
+
+    public void addSpellEffect(SpellEffect se){
+        spellEffects.add(se);
+    }
+
+    public ArrayList<SpellEffect> getSpellEffects(){
+        return spellEffects;
     }
 
 }

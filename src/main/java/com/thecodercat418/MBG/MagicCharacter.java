@@ -9,7 +9,7 @@ public class MagicCharacter extends BaseCharacter {
     private int manaGain = 1;
     private ArrayList<Wand> wands = new ArrayList<>();
     private Wand currentWand;
-    private ArrayList<SpellEffect> spellEffects = new ArrayList<>();
+    
 
     public MagicCharacter() {
         super("You");
@@ -56,14 +56,14 @@ public class MagicCharacter extends BaseCharacter {
         }
         currentWand.castSpell(victim, currentSpell);
         if (currentSpell.lastsFor > 0 || currentSpell.turnCooldown > 0) {
-            spellEffects.add(new SpellEffect(currentSpell, currentSpell.runningPlacement));
+            addSpellEffect(new SpellEffect(currentSpell, currentSpell.runningPlacement));
         }
         mana = mana - currentSpell.manaNeeded;
         return 1;
     }
 
     public SpellEffect getSpellEffectFromSpell(Spell spell) {
-        for (SpellEffect sp : spellEffects) {
+        for (SpellEffect sp : getSpellEffects()) {
             if (sp.originalSpell.equals(spell)) {
                 return sp;
             }
@@ -80,14 +80,6 @@ public class MagicCharacter extends BaseCharacter {
         mana += manaGain;
     }
 
-    @Override
-    public void finishTurn() {
-        for (int i = spellEffects.size() - 1; i >= 0; i--) {
-            spellEffects.get(i).turn();
-            if (spellEffects.get(i).isDead()) {
-                spellEffects.remove(i);
-            }
-        }
-    }
+    
 
 }

@@ -13,6 +13,8 @@ public class Spell {
     public String defence;
     public DamageTypes protectionType;
 
+    public boolean direct = true;
+
     public Spell(String spellName, int wandLevelNeeded, int turnCooldown, int lastsFor, String damage,
             DamageTypes damageType, String defence, DamageTypes protectionType, int manaNeeded,
             RunningPlacement runningPlacement) {

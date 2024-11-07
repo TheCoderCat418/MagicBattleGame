@@ -9,6 +9,7 @@ public class SpellEffect {
 
     public SpellEffect(Spell spell, RunningPlacement rp) {
         originalSpell = spell;
+        spell.direct = false;
         turnCooldown = spell.turnCooldown;
         remainingCooldown = turnCooldown;
         runningPlacement = rp;
