@@ -24,6 +24,7 @@ public class BaseCharacter {
     }
 
     public void modifyHealth(String healthModifier) {
+        //Defence modifiers ... mainly from SpellEffects
         if (healthModifier.charAt(0) == '-' && !dead) {
             if (defence >= Integer.parseInt(healthModifier.substring(1))) {
                 defence -= Integer.parseInt(healthModifier.substring(1));
@@ -39,10 +40,16 @@ public class BaseCharacter {
         }
     }
 
+     
+
     public void proccessSpell(Spell spell){
         //Defence Proccess
-        
+        modifyHealth(spell.damage);
         //Damage Proccess
+        
+    }
+
+    public void runningPlacementUpdate(RunningPlacement rp){
         
     }
 

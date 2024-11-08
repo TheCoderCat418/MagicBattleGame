@@ -17,7 +17,7 @@ public class SpellEffect {
     }
 
     public boolean isDead() {
-        return remainingCooldown <= 0;
+        return remainingCooldown <= 0 && runFor <= 0;
     }
 
     public void turn() {

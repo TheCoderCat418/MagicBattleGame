@@ -1,6 +1,7 @@
 package com.thecodercat418.MBG;
 
 import com.thecodercat418.MBG.Items.Item;
+import com.thecodercat418.MBG.Items.PoisonPotion;
 import com.thecodercat418.MBG.Wands.FireWand;
 
 import javafx.event.ActionEvent;
@@ -92,7 +93,7 @@ public class HelloController {
 
         currentPlayer = new MagicCharacter();
         currentPlayer.addWand(new FireWand());
-        currentPlayer.items.add(new Item("Test 1", null));
+        currentPlayer.items.add(new PoisonPotion());
         currentPlayer.items.add(new Item("Test 2", null));
         currentPlayer.items.add(new Item("Test 3", null));
         currentPlayer.items.add(new Item("Test 4", null));
@@ -285,6 +286,9 @@ public class HelloController {
             }
         }
         currentItem = null;
+        currentPlayer.finishTurn();
+        updateBattle();
+        enemyTurn();
     }
 
     public void loadBattle(BaseCharacter enemy) {
