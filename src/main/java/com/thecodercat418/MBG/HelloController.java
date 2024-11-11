@@ -79,9 +79,49 @@ public class HelloController {
     // --- //
     MagicCharacter currentPlayer;
     BaseCharacter currentEnemy;
+    BaseCharacter currentCharacter;
     Item currentItem;
 
-    String STATE = "BATTLE";
+    RunningPlacement STATE = RunningPlacement.BEFORE_TURN;
+    Turn setTurn = Turn.PLAYER;
+
+    enum Turn {
+        PLAYER,
+        ENEMY
+    }
+
+    public void gameStateChanged(boolean advance) {
+        updateBattle();
+        boolean playerTurn = setTurn == Turn.PLAYER ? true : false;
+        switch (STATE) {
+            case RunningPlacement.BEFORE_TURN:
+                currentPlayer.BEFORE_TURN(playerTurn);
+                currentEnemy.BEFORE_TURN(!playerTurn);
+                break;
+            case RunningPlacement.BEFORE_ATTACK:
+                currentPlayer.BEFORE_ATTACK(playerTurn);
+                currentEnemy.BEFORE_ATTACK(!playerTurn);
+                break;
+            case RunningPlacement.AFTER_ATTACK:
+                currentPlayer.AFTER_ATTACK(playerTurn);
+                currentEnemy.AFTER_ATTACK(!playerTurn);
+                break;
+            case RunningPlacement.AFTER_TURN:
+                currentPlayer.AFTER_TURN(playerTurn);
+                currentEnemy.AFTER_TURN(!playerTurn);
+                break;
+        }
+        if (RunningPlacement.AFTER_TURN == STATE) {
+            if (playerTurn) {
+                setTurn = Turn.ENEMY;
+                currentCharacter = currentEnemy;
+                enemyTurn();
+            } else {
+                setTurn = Turn.PLAYER;
+                currentCharacter = currentPlayer;
+            }
+        }
+    }
 
     public void initialize() {
         battleSlider.valueProperty().addListener((_, _, newValue) -> {
@@ -101,6 +141,7 @@ public class HelloController {
         currentPlayer.items.add(new Item("Test 6", null));
         // currentPlayer.items.add(new Item("Test 7", null));
         loadBattle(currentEnemy);
+        currentCharacter = currentPlayer;
         updateBattle();
     }
 
@@ -108,15 +149,18 @@ public class HelloController {
         statusBar.setText("");
         Button button = (Button) aEvent.getSource();
         if (button.getText().equals("Do Nothing")) {
-            currentPlayer.finishTurn();
-            enemyTurn();
-            updateBattle();
+            gameStateChanged(true); // BEFORE_TURN -> BEFORE_ATTACK
+            gameStateChanged(true); // BEFORE_ATTACK -> AFTER_ATTACK
+            gameStateChanged(true); // AFTER_ATTACK -> AFTER_TURN
+            gameStateChanged(true); // AFTER_TURN -> SIDESWAP -> BEFORE_TURN
             return;
         }
-        currentPlayer.finishTurn();
+        gameStateChanged(true); // BEFORE_TURN -> BEFORE_ATTACK
         currentPlayer.castSpell(button.getText(), currentEnemy);
+        gameStateChanged(true); // BEFORE_ATTACK -> AFTER_ATTACK
+        gameStateChanged(true); // AFTER_ATTACK -> AFTER_TURN
+        gameStateChanged(true); // AFTER_TURN -> SIDESWAP -> BEFORE_TURN
         updateBattle();
-        enemyTurn();
     }
 
     public void updateBattle() {
@@ -131,8 +175,11 @@ public class HelloController {
     }
 
     public void enemyTurn() {
-        currentPlayer.startTurn();
-        updateBattle();
+        // AI Here
+        gameStateChanged(true); // BEFORE_TURN -> BEFORE_ATTACK
+        gameStateChanged(true); // BEFORE_ATTACK -> AFTER_ATTACK
+        gameStateChanged(true); // AFTER_ATTACK -> AFTER_TURN
+        gameStateChanged(true); // AFTER_TURN -> SIDESWAP -> BEFORE_TURN
     }
 
     public void loadActionTable() {
@@ -255,6 +302,12 @@ public class HelloController {
                 }
             });
 
+            if (currentCharacter.usedItem) {
+                select.setDisable(true);
+            } else {
+                select.setDisable(false);
+            }
+
             ImageView imageView = new ImageView(item.image);
             imageView.setFitHeight(41.0);
             imageView.setFitWidth(44.0);
@@ -278,17 +331,19 @@ public class HelloController {
     }
 
     public void useItem() {
+        if (currentCharacter.usedItem) {
+            return;
+        }
         currentPlayer.addSpellEffect(currentItem.effect);
-        for(Item item : currentPlayer.items){
-            if(currentItem.equals(item)){
+        for (Item item : currentPlayer.items) {
+            if (currentItem.equals(item)) {
                 currentPlayer.items.remove(item);
                 break;
             }
         }
         currentItem = null;
-        currentPlayer.finishTurn();
+        currentCharacter.usedItem = true;
         updateBattle();
-        enemyTurn();
     }
 
     public void loadBattle(BaseCharacter enemy) {

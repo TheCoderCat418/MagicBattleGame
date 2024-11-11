@@ -76,7 +76,7 @@ public class MagicCharacter extends BaseCharacter {
     }
 
     @Override
-    public void startTurn() {
+    public void BEFORE_TURN() {
         mana += manaGain;
     }
 

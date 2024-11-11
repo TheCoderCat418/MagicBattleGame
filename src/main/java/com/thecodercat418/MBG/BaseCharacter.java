@@ -12,6 +12,7 @@ public class BaseCharacter {
     private String name;
     private ArrayList<SpellEffect> spellEffects = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
+    public boolean usedItem = false;
 
     public BaseCharacter(String name, int health, int defence) {
         this.health = health;
@@ -65,11 +66,19 @@ public class BaseCharacter {
         return maxHealth;
     }
 
-    public void startTurn() {
+    public void BEFORE_TURN(boolean attacker) {
         // passive healing
     }
 
-    public void finishTurn() {
+    public void BEFORE_ATTACK(boolean attacker){
+
+    }
+
+    public void AFTER_ATTACK(boolean attacker){
+
+    }
+
+    public void AFTER_TURN(boolean attacker) {
         for (int i = spellEffects.size() - 1; i >= 0; i--) {
             proccessSpell(spellEffects.get(i).originalSpell);
             spellEffects.get(i).turn();
