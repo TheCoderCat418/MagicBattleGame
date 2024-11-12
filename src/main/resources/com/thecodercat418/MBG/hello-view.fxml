@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
    <tabs>
       <Tab text="Menu">
          <content>
@@ -107,7 +107,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="390.0" layoutY="526.0" mnemonicParsing="false" onAction="#loadShop" prefHeight="25.0" prefWidth="100.0" text="Buy" />
+                  <Button fx:id="buyButton" layoutX="390.0" layoutY="526.0" mnemonicParsing="false" onAction="#buyItem" prefHeight="25.0" prefWidth="100.0" text="Buy" />
                   <Label fx:id="shopItemDesc" alignment="CENTER" layoutX="322.0" layoutY="366.0" prefHeight="150.0" prefWidth="235.0" text="Label" />
                   <Label alignment="CENTER_RIGHT" layoutX="308.0" layoutY="28.0" prefHeight="17.0" prefWidth="277.0" text="Gold: " />
                   <ImageView fx:id="bruh" fitHeight="307.0" fitWidth="276.0" layoutX="309.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">

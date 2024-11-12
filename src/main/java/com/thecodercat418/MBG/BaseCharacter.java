@@ -10,6 +10,7 @@ public class BaseCharacter {
     private int defence = 0;
     private boolean dead = false;
     private String name;
+    private int coins = 0;
     private ArrayList<SpellEffect> spellEffects = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
     public boolean usedItem = false;
@@ -97,6 +98,17 @@ public class BaseCharacter {
 
     public ArrayList<SpellEffect> getSpellEffects(){
         return spellEffects;
+    }
+
+    public int getCoins(){
+        return coins;
+    }
+
+    public void changeCoins(int change){
+        coins =+ change;
+        if(coins<0){
+            coins = 0;
+        }
     }
 
 }

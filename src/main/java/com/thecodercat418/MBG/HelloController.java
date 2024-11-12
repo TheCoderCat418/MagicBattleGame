@@ -93,6 +93,8 @@ public class HelloController {
     public ListView<String> shopTable;
     @FXML
     public Label shopItemDesc;
+    @FXML
+    public Button buyButton;
 
     ShopItem currentShopItem;
     ArrayList<ShopItem> listOfItems = new ArrayList<>();
@@ -160,12 +162,14 @@ public class HelloController {
         battleSlider.valueProperty().addListener((_, _, newValue) -> {
             miniScreenSwitcher(newValue.intValue());
         });
-        shopTable.getItems().add("a");
-        shopTable.selectionModelProperty().addListener((a, b, c) -> {
-            shopItemDesc.setText(listOfItems.get(c.getSelectedIndex()).item.description);
-            currentShopItem = listOfItems.get(c.getSelectedIndex());
+        shopTable.getSelectionModel().selectedIndexProperty().addListener((_, _, c) -> {
+            shopItemDesc.setText(listOfItems.get(c.intValue()).item.description);
+            currentShopItem = listOfItems.get(c.intValue());
+            buyButton.setDisable(false);
+            if(currentShopItem.price>currentPlayer.getCoins()){
+                buyButton.setDisable(true);
+            }
         });
-        shopTable.getSelectionModel().select(0);
         battleSlider.setValue(3.0);
         currentEnemy = new BaseCharacter("Enemy");
 
@@ -177,6 +181,14 @@ public class HelloController {
         currentPlayer.items.add(new Item("Test 4", null, "c"));
         currentPlayer.items.add(new Item("Test 5", null, "d"));
         currentPlayer.items.add(new Item("Test 6", null, "e"));
+
+        listOfItems.add(new ShopItem(new Item("a", null,"1"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("b", null, "2"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("c", null, "3"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("d", null, "4"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("e", null,"5"), 10, 3));
+
+        currentPlayer.changeCoins(500);
         // currentPlayer.items.add(new Item("Test 7", null));
         loadBattle(currentEnemy);
         currentCharacter = currentPlayer;
@@ -210,6 +222,7 @@ public class HelloController {
         playerMana.setText(Integer.toString(currentPlayer.getMana()));
         loadActionTable();
         loadItemTable();
+        loadShop();
     }
 
     public void enemyTurn() {
@@ -369,15 +382,17 @@ public class HelloController {
     }
 
     public void loadShop() {
-        listOfItems.add(new ShopItem(new Item("a", null,"1"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("b", null, "2"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("c", null, "3"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("d", null, "4"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("e", null,"5"), 10, 3));
         shopTable.getItems().clear();
         for (ShopItem si : listOfItems) {
             shopTable.getItems().add(si.item.name + " : Price: " + si.price + " : Quanity: " + si.quatity);
         }
+    }
+    public void buyItem(){
+        currentPlayer.items.add(currentShopItem.item);
+        currentPlayer.changeCoins(-currentShopItem.price);
+        currentShopItem.quatity--;
+        currentShopItem = null;
+        loadShop();
     }
 
     public void useItem() {
