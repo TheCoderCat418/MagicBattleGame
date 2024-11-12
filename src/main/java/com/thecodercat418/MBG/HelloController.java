@@ -92,35 +92,38 @@ public class HelloController {
 
     public void gameStateChanged(boolean advance) {
         updateBattle();
-        boolean playerTurn = setTurn == Turn.PLAYER ? true : false;
+        boolean playerTurn = (setTurn == Turn.PLAYER ? true : false);
         switch (STATE) {
             case RunningPlacement.BEFORE_TURN:
                 currentPlayer.BEFORE_TURN(playerTurn);
                 currentEnemy.BEFORE_TURN(!playerTurn);
+                STATE = advance ? RunningPlacement.BEFORE_ATTACK : RunningPlacement.BEFORE_TURN;
                 break;
             case RunningPlacement.BEFORE_ATTACK:
                 currentPlayer.BEFORE_ATTACK(playerTurn);
                 currentEnemy.BEFORE_ATTACK(!playerTurn);
+                STATE = advance ? RunningPlacement.AFTER_ATTACK : RunningPlacement.BEFORE_ATTACK;
                 break;
             case RunningPlacement.AFTER_ATTACK:
                 currentPlayer.AFTER_ATTACK(playerTurn);
                 currentEnemy.AFTER_ATTACK(!playerTurn);
+                STATE = advance ? RunningPlacement.AFTER_TURN : RunningPlacement.AFTER_ATTACK;
                 break;
-            case RunningPlacement.AFTER_TURN:
+            case RunningPlacement.AFTER_TURN: // TURN CHANGE
                 currentPlayer.AFTER_TURN(playerTurn);
                 currentEnemy.AFTER_TURN(!playerTurn);
+                STATE = advance ? RunningPlacement.BEFORE_TURN : RunningPlacement.AFTER_TURN;
+                if (playerTurn) {
+                    setTurn = Turn.ENEMY;
+                    currentCharacter = currentEnemy;
+                    enemyTurn();
+                } else {
+                    setTurn = Turn.PLAYER;
+                    currentCharacter = currentPlayer;
+                }
                 break;
         }
-        if (RunningPlacement.AFTER_TURN == STATE) {
-            if (playerTurn) {
-                setTurn = Turn.ENEMY;
-                currentCharacter = currentEnemy;
-                enemyTurn();
-            } else {
-                setTurn = Turn.PLAYER;
-                currentCharacter = currentPlayer;
-            }
-        }
+
     }
 
     public void initialize() {

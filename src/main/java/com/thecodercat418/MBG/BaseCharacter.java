@@ -79,6 +79,9 @@ public class BaseCharacter {
     }
 
     public void AFTER_TURN(boolean attacker) {
+        if(!attacker){
+            return;
+        }
         for (int i = spellEffects.size() - 1; i >= 0; i--) {
             proccessSpell(spellEffects.get(i).originalSpell);
             spellEffects.get(i).turn();

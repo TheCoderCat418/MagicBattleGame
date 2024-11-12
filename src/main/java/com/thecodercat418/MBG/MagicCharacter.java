@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class MagicCharacter extends BaseCharacter {
     private int mana;
+    private int maxMana = 10;
     private int manaGain = 1;
     private ArrayList<Wand> wands = new ArrayList<>();
     private Wand currentWand;
@@ -76,10 +77,10 @@ public class MagicCharacter extends BaseCharacter {
     }
 
     @Override
-    public void BEFORE_TURN() {
+    public void BEFORE_TURN(boolean attacker) {
         mana += manaGain;
+        if(mana>maxMana){
+            mana = maxMana;
+        }
     }
-
-    
-
 }
