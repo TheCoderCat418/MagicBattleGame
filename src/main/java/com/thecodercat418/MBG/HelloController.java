@@ -1,7 +1,13 @@
 package com.thecodercat418.MBG;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
 import com.thecodercat418.MBG.Items.Item;
 import com.thecodercat418.MBG.Items.PoisonPotion;
+import com.thecodercat418.MBG.Items.ShopItem;
 import com.thecodercat418.MBG.Wands.FireWand;
 
 import javafx.event.ActionEvent;
@@ -14,7 +20,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -77,6 +87,17 @@ public class HelloController {
     public TreeView<String> spellDetails;
 
     // --- //
+    @FXML
+    public ImageView bruh;
+    @FXML
+    public ListView<String> shopTable;
+    @FXML
+    public Label shopItemDesc;
+
+    ShopItem currentShopItem;
+    ArrayList<ShopItem> listOfItems = new ArrayList<>();
+
+    // --- //
     MagicCharacter currentPlayer;
     BaseCharacter currentEnemy;
     BaseCharacter currentCharacter;
@@ -127,21 +148,35 @@ public class HelloController {
     }
 
     public void initialize() {
+        try {
+            loadShop();
+            // System.out.println(shopTable.getColumns().get(0));
+            bruh.setImage(new Image(
+                    new FileInputStream(new File("src\\main\\resources\\com\\thecodercat418\\MBG\\shopkeeper.jpg"))));
+
+        } catch (FileNotFoundException e) {
+            // Womp Womp
+        }
         battleSlider.valueProperty().addListener((_, _, newValue) -> {
             miniScreenSwitcher(newValue.intValue());
         });
-
+        shopTable.getItems().add("a");
+        shopTable.selectionModelProperty().addListener((a, b, c) -> {
+            shopItemDesc.setText(listOfItems.get(c.getSelectedIndex()).item.description);
+            currentShopItem = listOfItems.get(c.getSelectedIndex());
+        });
+        shopTable.getSelectionModel().select(0);
         battleSlider.setValue(3.0);
         currentEnemy = new BaseCharacter("Enemy");
 
         currentPlayer = new MagicCharacter();
         currentPlayer.addWand(new FireWand());
         currentPlayer.items.add(new PoisonPotion());
-        currentPlayer.items.add(new Item("Test 2", null));
-        currentPlayer.items.add(new Item("Test 3", null));
-        currentPlayer.items.add(new Item("Test 4", null));
-        currentPlayer.items.add(new Item("Test 5", null));
-        currentPlayer.items.add(new Item("Test 6", null));
+        currentPlayer.items.add(new Item("Test 2", null, "a"));
+        currentPlayer.items.add(new Item("Test 3", null, "b"));
+        currentPlayer.items.add(new Item("Test 4", null, "c"));
+        currentPlayer.items.add(new Item("Test 5", null, "d"));
+        currentPlayer.items.add(new Item("Test 6", null, "e"));
         // currentPlayer.items.add(new Item("Test 7", null));
         loadBattle(currentEnemy);
         currentCharacter = currentPlayer;
@@ -331,6 +366,18 @@ public class HelloController {
 
         }
         base.setPrefHeight(100.0 * layer + 14.0 * (layer - 1));
+    }
+
+    public void loadShop() {
+        listOfItems.add(new ShopItem(new Item("a", null,"1"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("b", null, "2"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("c", null, "3"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("d", null, "4"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("e", null,"5"), 10, 3));
+        shopTable.getItems().clear();
+        for (ShopItem si : listOfItems) {
+            shopTable.getItems().add(si.item.name + " : Price: " + si.price + " : Quanity: " + si.quatity);
+        }
     }
 
     public void useItem() {

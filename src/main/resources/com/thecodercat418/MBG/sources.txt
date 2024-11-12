@@ -6,3 +6,6 @@ https://stackoverflow.com/questions/40593284/how-can-i-define-a-method-for-slide
 
 Ternary Operater:
 https://stackoverflow.com/questions/8898590/short-form-for-java-if-statement
+
+Images:
+DALL-E 3

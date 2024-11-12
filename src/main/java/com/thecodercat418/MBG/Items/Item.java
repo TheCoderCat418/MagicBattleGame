@@ -10,13 +10,15 @@ public class Item {
     public Image image;
     public String description;
 
-    public Item(String name, SpellEffect effect){
+    public Item(String name, SpellEffect effect, String description){
         this.name = name;
         this.effect = effect;
+        this.description = description;
     }
-    public Item(String name, SpellEffect effect, Image image){
+    public Item(String name, SpellEffect effect, String description, Image image){
         this.name = name;
         this.effect = effect;
         this.image = image;
+        this.description = description;
     }
 }
