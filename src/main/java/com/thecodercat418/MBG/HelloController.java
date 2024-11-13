@@ -164,6 +164,9 @@ public class HelloController {
             miniScreenSwitcher(newValue.intValue());
         });
         shopTable.getSelectionModel().selectedIndexProperty().addListener((_, _, c) -> {
+            if(c.intValue() == -1){
+                return;
+            }
             shopItemDesc.setText(listOfItems.get(c.intValue()).item.description);
             currentShopItem = listOfItems.get(c.intValue());
             buyButton.setDisable(false);
@@ -386,6 +389,9 @@ public class HelloController {
         goldCounter.setText("Gold: " + currentPlayer.getCoins());
         shopTable.getItems().clear(); //I HAVE NO IDEA WHY THIS IS ERRORING PLEASE DISREGUARD.
         for (ShopItem si : listOfItems) {
+            if(si.quatity<=0){
+                continue;
+            }
             shopTable.getItems().add(si.item.name + " : Price: " + si.price + " : Quanity: " + si.quatity);
         }
     }

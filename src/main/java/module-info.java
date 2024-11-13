@@ -7,6 +7,7 @@ module com.thecodercat418.MBG {
 
     exports com.thecodercat418.MBG;
     exports com.thecodercat418.MBG.Wands;
+    exports com.thecodercat418.MBG.Items;
 
     opens com.thecodercat418.MBG.Wands to javafx.fxml;
 }
