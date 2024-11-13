@@ -105,7 +105,7 @@ public class BaseCharacter {
     }
 
     public void changeCoins(int change){
-        coins =+ change;
+        coins = coins + change;
         if(coins<0){
             coins = 0;
         }

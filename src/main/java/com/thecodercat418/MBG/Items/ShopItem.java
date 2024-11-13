@@ -9,5 +9,5 @@ public class ShopItem {
         this.item = item;
         this.price = price;
         this.quatity = quatity;
-    }
+        }
 }

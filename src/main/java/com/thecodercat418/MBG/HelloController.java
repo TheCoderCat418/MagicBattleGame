@@ -95,6 +95,8 @@ public class HelloController {
     public Label shopItemDesc;
     @FXML
     public Button buyButton;
+    @FXML
+    public Label goldCounter;
 
     ShopItem currentShopItem;
     ArrayList<ShopItem> listOfItems = new ArrayList<>();
@@ -151,7 +153,6 @@ public class HelloController {
 
     public void initialize() {
         try {
-            loadShop();
             // System.out.println(shopTable.getColumns().get(0));
             bruh.setImage(new Image(
                     new FileInputStream(new File("src\\main\\resources\\com\\thecodercat418\\MBG\\shopkeeper.jpg"))));
@@ -382,17 +383,17 @@ public class HelloController {
     }
 
     public void loadShop() {
-        shopTable.getItems().clear();
+        goldCounter.setText("Gold: " + currentPlayer.getCoins());
+        shopTable.getItems().clear(); //I HAVE NO IDEA WHY THIS IS ERRORING PLEASE DISREGUARD.
         for (ShopItem si : listOfItems) {
             shopTable.getItems().add(si.item.name + " : Price: " + si.price + " : Quanity: " + si.quatity);
         }
     }
     public void buyItem(){
         currentPlayer.items.add(currentShopItem.item);
-        currentPlayer.changeCoins(-currentShopItem.price);
+        currentPlayer.changeCoins(-1*currentShopItem.price);
         currentShopItem.quatity--;
-        currentShopItem = null;
-        loadShop();
+        updateBattle();
     }
 
     public void useItem() {
