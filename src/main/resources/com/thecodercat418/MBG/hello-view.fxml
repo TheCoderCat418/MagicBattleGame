@@ -4,14 +4,17 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.text.Font?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
@@ -75,7 +78,7 @@
                   <Label layoutX="30.0" layoutY="102.0" text="You" />
                   <Label fx:id="enemyName" layoutX="375.0" layoutY="410.0" text="PLAYERNAME" />
                   <Label fx:id="statusBar" layoutX="300.0" layoutY="24.0" prefHeight="16.0" prefWidth="283.0" />
-                  <AnchorPane fx:id="battleItems" layoutX="41.0" layoutY="317.0" prefHeight="236.0" prefWidth="227.0" scaleShape="false" style="-fx-border-radius: 1;">
+                  <AnchorPane fx:id="battleItems" layoutX="41.0" layoutY="317.0" prefHeight="236.0" prefWidth="227.0" scaleShape="false" style="-fx-border-radius: 1;" visible="false">
                      <children>
                         <ScrollPane fx:id="scrollBattleItems" hbarPolicy="NEVER" hmax="0.0" prefHeight="151.0" prefWidth="227.0" style="-fx-border-radius: 1;" vbarPolicy="ALWAYS">
                            <content>
@@ -99,6 +102,53 @@
                      </children>
 
                   </AnchorPane>
+                  <AnchorPane fx:id="battleWands" layoutX="41.0" layoutY="317.0" prefHeight="236.0" prefWidth="227.0" scaleShape="false" style="-fx-border-radius: 1;">
+                     <children>
+                        <Pane prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: gray;">
+                           <children>
+                              <RadioButton layoutX="30.0" layoutY="52.0" mnemonicParsing="false" selected="true">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="wands" />
+                                 </toggleGroup></RadioButton>
+                              <Label alignment="CENTER" layoutX="3.0" layoutY="29.0" prefHeight="17.0" prefWidth="70.0" text="Wand A" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="151.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: gray;">
+                           <children>
+                              <RadioButton layoutX="28.0" layoutY="55.0" mnemonicParsing="false" toggleGroup="$wands" />
+                              <Label alignment="CENTER" layoutX="1.0" layoutY="29.0" prefHeight="17.0" prefWidth="70.0" text="Wand C" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="74.0" prefHeight="75.0" prefWidth="77.0" style="-fx-background-color: gray;">
+                           <children>
+                              <RadioButton layoutX="31.0" layoutY="52.0" mnemonicParsing="false" toggleGroup="$wands" />
+                              <Label alignment="CENTER" layoutX="4.0" layoutY="29.0" prefHeight="17.0" prefWidth="70.0" text="Wand B" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="37.0" layoutY="75.0" prefHeight="75.0" prefWidth="77.0" style="-fx-background-color: gray;">
+                           <children>
+                              <RadioButton layoutX="31.0" layoutY="52.0" mnemonicParsing="false" toggleGroup="$wands" />
+                              <Label alignment="CENTER" layoutX="4.0" layoutY="29.0" prefHeight="17.0" prefWidth="70.0" text="Wand D" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="113.0" layoutY="75.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: gray;">
+                           <children>
+                              <RadioButton layoutX="30.0" layoutY="52.0" mnemonicParsing="false" toggleGroup="$wands" />
+                              <Label alignment="CENTER" layoutX="3.0" layoutY="29.0" prefHeight="17.0" prefWidth="70.0" text="Wand E" />
+                           </children>
+                        </Pane>
+                        <Pane layoutY="160.0" prefHeight="75.0" prefWidth="75.0" style="-fx-background-color: gray;">
+                           <children>
+                              <Label alignment="CENTER" layoutX="3.0" layoutY="29.0" prefHeight="17.0" prefWidth="70.0" text="WandF" />
+                           </children>
+                        </Pane>
+                        <Button alignment="CENTER" layoutX="188.0" layoutY="76.0" mnemonicParsing="false" prefHeight="158.0" prefWidth="39.0" text="SWAP" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Button>
+                        <Label layoutX="87.0" layoutY="180.0" prefHeight="17.0" prefWidth="77.0" text="Current Wand" />
+                        <QuadCurve controlX="-11.3333740234375" controlY="-0.6666259765625" endX="-11.3333740234375" endY="-25.6666259765625" fill="#1f93ff00" layoutX="137.0" layoutY="223.0" startX="-54.6666259765625" startY="-0.66656494140625" stroke="BLACK" strokeType="INSIDE" />
+                     </children></AnchorPane>
                </children>
             </AnchorPane>
          </content>

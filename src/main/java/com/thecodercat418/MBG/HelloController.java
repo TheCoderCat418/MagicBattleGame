@@ -69,6 +69,8 @@ public class HelloController {
     @FXML
     private AnchorPane battleItems;
     @FXML
+    private AnchorPane battleWands;
+    @FXML
     public Pane templateItem;
     @FXML
     public ScrollPane scrollBattleItems;
@@ -418,6 +420,10 @@ public class HelloController {
         updateBattle();
     }
 
+    public void swapWands(){
+        
+    }
+
     public void loadBattle(BaseCharacter enemy) {
         enemyName.setText(enemy.getName());
         currentEnemy = enemy;
@@ -438,11 +444,14 @@ public class HelloController {
     public void miniScreenSwitcher(int screenId) {
         battleAbilities.setVisible(false);
         battleItems.setVisible(false);
+        battleWands.setVisible(false);
         // Screen 1: Abilities
         if (screenId == 1) {
             battleAbilities.setVisible(true);
         } else if (screenId == 2) {
             battleItems.setVisible(true);
+        } else if(screenId == 3){
+            battleWands.setVisible(true);
         }
     }
 }
