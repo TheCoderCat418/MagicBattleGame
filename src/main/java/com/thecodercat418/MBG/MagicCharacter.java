@@ -45,21 +45,21 @@ public class MagicCharacter extends BaseCharacter {
     public int castSpell(String spellName, BaseCharacter victim) {
         Spell currentSpell = null;
         for (Spell spell : currentWand.getSpells()) {
-            if (spell.spellName.equals(spellName)) {
+            if (spell.getSpellName().equals(spellName)) {
                 currentSpell = spell;
             }
         }
         if (currentSpell == null) {
             return -2;
         }
-        if (mana - currentSpell.manaNeeded < 0) {
+        if (mana - currentSpell.getManaNeeded() < 0) {
             return -1;
         }
         currentWand.castSpell(victim, currentSpell);
-        if (currentSpell.lastsFor > 0 || currentSpell.turnCooldown > 0) {
-            addSpellEffect(new SpellEffect(currentSpell, currentSpell.runningPlacement));
+        if (currentSpell.getLastsFor() > 0 || currentSpell.getTurnCooldown() > 0) {
+            addSpellEffect(new SpellEffect(currentSpell, currentSpell.getRunningPlacement()));
         }
-        mana = mana - currentSpell.manaNeeded;
+        mana = mana - currentSpell.getManaNeeded();
         return 1;
     }
 

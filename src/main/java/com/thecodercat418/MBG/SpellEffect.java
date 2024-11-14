@@ -9,11 +9,11 @@ public class SpellEffect {
 
     public SpellEffect(Spell spell, RunningPlacement rp) {
         originalSpell = spell;
-        spell.direct = false;
-        turnCooldown = spell.turnCooldown;
+        spell.setDirect(false);
+        turnCooldown = spell.getTurnCooldown();
         remainingCooldown = turnCooldown;
         runningPlacement = rp;
-        this.runFor = spell.lastsFor;
+        this.runFor = spell.getLastsFor();
     }
 
     public boolean isDead() {

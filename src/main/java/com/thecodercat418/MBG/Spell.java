@@ -1,19 +1,19 @@
 package com.thecodercat418.MBG;
 
 public class Spell {
-    public String spellName;
-    public int manaNeeded;
-    public int wandLevelNeeded;
-    public int turnCooldown;
-    public int lastsFor;
-    public RunningPlacement runningPlacement;
-    public String damage;
-    public DamageTypes damageType;
+    private String spellName;
+    private int manaNeeded;
+    private int wandLevelNeeded;
+    private int turnCooldown;
+    private int lastsFor;
+    private RunningPlacement runningPlacement;
+    private String damage;
+    private DamageTypes damageType;
 
-    public String defence;
-    public DamageTypes protectionType;
+    private String defence;
+    private DamageTypes protectionType;
 
-    public boolean direct = true;
+    private boolean direct = true;
 
     public Spell(String spellName, int wandLevelNeeded, int turnCooldown, int lastsFor, String damage,
             DamageTypes damageType, String defence, DamageTypes protectionType, int manaNeeded,
@@ -30,4 +30,54 @@ public class Spell {
         this.runningPlacement = runningPlacement;
     }
 
+    
+
+    public void setDirect(boolean direct) {
+        this.direct = direct;
+    }
+
+
+    public String getSpellName() {
+        return spellName;
+    }
+
+    public int getManaNeeded() {
+        return manaNeeded;
+    }
+
+    public int getWandLevelNeeded() {
+        return wandLevelNeeded;
+    }
+
+    public int getTurnCooldown() {
+        return turnCooldown;
+    }
+
+    public int getLastsFor() {
+        return lastsFor;
+    }
+
+    public RunningPlacement getRunningPlacement() {
+        return runningPlacement;
+    }
+
+    public String getDamage() {
+        return damage;
+    }
+
+    public DamageTypes getDamageType() {
+        return damageType;
+    }
+
+    public String getDefence() {
+        return defence;
+    }
+
+    public DamageTypes getProtectionType() {
+        return protectionType;
+    }
+
+    public boolean isDirect() {
+        return direct;
+    }
 }

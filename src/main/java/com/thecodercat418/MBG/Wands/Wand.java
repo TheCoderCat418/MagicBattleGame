@@ -19,7 +19,7 @@ public class Wand {
     }
 
     public void castSpell(BaseCharacter characterToAttack, Spell spellToCast) {
-        characterToAttack.modifyHealth(spellToCast.damage);
+        characterToAttack.modifyHealth(spellToCast.getDamage());
     }
 
     public String getName() {
@@ -32,7 +32,7 @@ public class Wand {
 
     public Spell findSpellByName(String nameOfSpell) {
         for (Spell spell : getSpells()) {
-            if (spell.spellName.equals(nameOfSpell)) {
+            if (spell.getSpellName().equals(nameOfSpell)) {
                 return spell;
             }
         }

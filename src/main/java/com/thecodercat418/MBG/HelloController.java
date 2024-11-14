@@ -100,19 +100,19 @@ public class HelloController {
     @FXML
     public Label goldCounter;
 
-    ShopItem currentShopItem;
-    ArrayList<ShopItem> listOfItems = new ArrayList<>();
+    private ShopItem currentShopItem;
+    private ArrayList<ShopItem> listOfItems = new ArrayList<>();
 
     // --- //
-    MagicCharacter currentPlayer;
-    BaseCharacter currentEnemy;
-    BaseCharacter currentCharacter;
-    Item currentItem;
+    private MagicCharacter currentPlayer;
+    private BaseCharacter currentEnemy;
+    private BaseCharacter currentCharacter;
+    private Item currentItem;
 
-    RunningPlacement STATE = RunningPlacement.BEFORE_TURN;
-    Turn setTurn = Turn.PLAYER;
+    private RunningPlacement STATE = RunningPlacement.BEFORE_TURN;
+    private Turn setTurn = Turn.PLAYER;
 
-    enum Turn {
+    private enum Turn {
         PLAYER,
         ENEMY
     }
@@ -244,8 +244,8 @@ public class HelloController {
         for (int i = 0; i < currentPlayer.getCurrentWand().getSpells().length; i++) {
             Spell currentSpell = currentPlayer.getCurrentWand().getSpells()[i];
             boolean cooldown = currentPlayer.getSpellEffectFromSpell(currentSpell) != null;
-            boolean mana = currentPlayer.getMana() < currentSpell.manaNeeded;
-            boolean locked = currentPlayer.getCurrentWand().getWandLevel() < currentSpell.wandLevelNeeded;
+            boolean mana = currentPlayer.getMana() < currentSpell.getManaNeeded();
+            boolean locked = currentPlayer.getCurrentWand().getWandLevel() < currentSpell.getWandLevelNeeded();
             Button button = null;
             Label label = null;
             switch (track) {
@@ -266,11 +266,11 @@ public class HelloController {
                     label = SMA4;
                     break;
             }
-            button.setText(currentPlayer.getCurrentWand().getSpells()[i].spellName);
+            button.setText(currentPlayer.getCurrentWand().getSpells()[i].getSpellName());
             button.setDisable(false);
             label.setText("Ready.");
             if (mana) {
-                label.setText("Not Enough Mana!\nYou need " + currentSpell.manaNeeded + " mana!");
+                label.setText("Not Enough Mana!\nYou need " + currentSpell.getManaNeeded() + " mana!");
                 button.setDisable(true);
             }
             if (cooldown) {
@@ -280,7 +280,7 @@ public class HelloController {
                 button.setDisable(true);
             }
             if (locked) {
-                label.setText("It's Locked!\nWand level needed: " + currentSpell.wandLevelNeeded);
+                label.setText("It's Locked!\nWand level needed: " + currentSpell.getWandLevelNeeded());
                 button.setDisable(true);
             }
             track++;

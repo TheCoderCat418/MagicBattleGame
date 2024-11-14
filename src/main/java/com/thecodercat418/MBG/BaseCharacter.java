@@ -46,7 +46,7 @@ public class BaseCharacter {
 
     public void proccessSpell(Spell spell){
         //Defence Proccess
-        modifyHealth(spell.damage);
+        modifyHealth(spell.getDamage());
         //Damage Proccess
         
     }
