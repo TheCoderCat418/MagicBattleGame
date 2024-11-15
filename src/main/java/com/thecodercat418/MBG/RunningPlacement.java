@@ -6,7 +6,7 @@ package com.thecodercat418.MBG;
  */
 public enum RunningPlacement {
     BEFORE_TURN,
-    AFTER_ATTACK,
     BEFORE_ATTACK,
-    AFTER_TURN
+    AFTER_ATTACK,
+    AFTER_TURN,
 }

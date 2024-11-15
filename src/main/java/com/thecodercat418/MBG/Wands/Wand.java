@@ -6,12 +6,17 @@ import com.thecodercat418.MBG.Spell;
 import java.util.ArrayList;
 
 public class Wand {
-    protected int wandLevel = 0;
+    protected int maxLevel = 3;
+    protected int level = 0;
     protected String name;
     protected ArrayList<Spell> spells = new ArrayList<>();
 
-    protected Wand() {
+    protected Wand(){}
 
+    public Wand(int maxLevel, String name, ArrayList<Spell> spells) {
+        this.maxLevel = maxLevel;
+        this.name = name;
+        this.spells = spells;
     }
 
     public Spell[] getSpells() {
@@ -26,8 +31,8 @@ public class Wand {
         return name;
     }
 
-    public int getWandLevel() {
-        return wandLevel;
+    public int getLevel() {
+        return level;
     }
 
     public Spell findSpellByName(String nameOfSpell) {

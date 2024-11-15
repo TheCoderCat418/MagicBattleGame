@@ -26,7 +26,7 @@ public class BaseCharacter {
     }
 
     public void modifyHealth(String healthModifier) {
-        //Defence modifiers ... mainly from SpellEffects
+        // Defence modifiers ... mainly from SpellEffects
         if (healthModifier.charAt(0) == '-' && !dead) {
             if (defence >= Integer.parseInt(healthModifier.substring(1))) {
                 defence -= Integer.parseInt(healthModifier.substring(1));
@@ -42,17 +42,15 @@ public class BaseCharacter {
         }
     }
 
-     
-
-    public void proccessSpell(Spell spell){
-        //Defence Proccess
+    public void proccessSpell(Spell spell) {
+        // Defence Proccess
         modifyHealth(spell.getDamage());
-        //Damage Proccess
-        
+        // Damage Proccess
+
     }
 
-    public void runningPlacementUpdate(RunningPlacement rp){
-        
+    public void runningPlacementUpdate(RunningPlacement rp) {
+
     }
 
     public int getHealth() {
@@ -71,20 +69,20 @@ public class BaseCharacter {
         // passive healing
     }
 
-    public void BEFORE_ATTACK(boolean attacker){
+    public void BEFORE_ATTACK(boolean attacker) {
 
     }
 
-    public void AFTER_ATTACK(boolean attacker){
+    public void AFTER_ATTACK(boolean attacker) {
 
     }
 
     public void AFTER_TURN(boolean attacker) {
-        if(!attacker){
+        if (!attacker) {
             return;
         }
         for (int i = spellEffects.size() - 1; i >= 0; i--) {
-            proccessSpell(spellEffects.get(i).originalSpell);
+            proccessSpell(spellEffects.get(i).getOriginalSpell());
             spellEffects.get(i).turn();
             if (spellEffects.get(i).isDead()) {
                 spellEffects.remove(i);
@@ -92,23 +90,22 @@ public class BaseCharacter {
         }
     }
 
-    public void addSpellEffect(SpellEffect se){
+    public void addSpellEffect(SpellEffect se) {
         spellEffects.add(se);
     }
 
-    public ArrayList<SpellEffect> getSpellEffects(){
+    public ArrayList<SpellEffect> getSpellEffects() {
         return spellEffects;
     }
 
-    public int getCoins(){
+    public int getCoins() {
         return coins;
     }
 
-    public void changeCoins(int change){
+    public void changeCoins(int change) {
         coins = coins + change;
-        if(coins<0){
+        if (coins < 0) {
             coins = 0;
         }
     }
-
 }

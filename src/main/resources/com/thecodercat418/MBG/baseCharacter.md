@@ -10,4 +10,4 @@ Percents (```%```) work as well, and function as you think they would. If I have
 
 ## Damage Placement
 
-Some spells have damage that deals over time. That's when SpellEffect becomes very handy. We can use SpellEffect to have the BaseCharacter remember that it has damage to process every turn. It also allows for SpellEffect to play at diffrent times than jsut standard.
+Some spells have damage that deals over time. That's when SpellEffect becomes very handy. We can use SpellEffect to have the BaseCharacter remember that it has damage to process every turn. It also allows for SpellEffect to play at diffrent times than just standard.

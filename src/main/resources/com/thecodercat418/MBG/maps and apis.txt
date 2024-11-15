@@ -1,3 +1,9 @@
 # this file will be used as an api tracker to keep my head stable
 
 $DOMAIN: magicbattlegame.thecodercat418.net
+
+#Get all wands
+GET: $DOMAIN/wands
+
+#Get all items
+GET: $DOMAIN/items

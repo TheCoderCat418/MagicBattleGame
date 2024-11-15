@@ -1,11 +1,11 @@
 package com.thecodercat418.MBG;
 
 public class SpellEffect {
-    public Spell originalSpell;
-    public int remainingCooldown;
-    public RunningPlacement runningPlacement;
-    public int turnCooldown;
-    public int runFor;
+    private Spell originalSpell;
+    private int remainingCooldown;
+    private RunningPlacement runningPlacement;
+    private int turnCooldown;
+    private int runFor;
 
     public SpellEffect(Spell spell, RunningPlacement rp) {
         originalSpell = spell;
@@ -25,12 +25,27 @@ public class SpellEffect {
         runFor--;
     }
 
-    public Spell getSpell() {
-        return originalSpell;
-    }
-
     public boolean hasEffect() {
         return runFor > 0;
     }
 
+    public Spell getOriginalSpell() {
+        return originalSpell;
+    }
+
+    public int getRemainingCooldown() {
+        return remainingCooldown;
+    }
+
+    public RunningPlacement getRunningPlacement() {
+        return runningPlacement;
+    }
+
+    public int getTurnCooldown() {
+        return turnCooldown;
+    }
+
+    public int getRunFor() {
+        return runFor;
+    }
 }

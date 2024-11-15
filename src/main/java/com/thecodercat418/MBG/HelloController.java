@@ -9,6 +9,7 @@ import com.thecodercat418.MBG.Items.Item;
 import com.thecodercat418.MBG.Items.PoisonPotion;
 import com.thecodercat418.MBG.Items.ShopItem;
 import com.thecodercat418.MBG.Wands.FireWand;
+import com.thecodercat418.MBG.Wands.Wand;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,12 +19,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -71,34 +70,53 @@ public class HelloController {
     @FXML
     private AnchorPane battleWands;
     @FXML
-    public Pane templateItem;
+    private Pane templateItem;
     @FXML
-    public ScrollPane scrollBattleItems;
+    private ScrollPane scrollBattleItems;
     @FXML
-    public Button useItem;
+    private Button useItem;
     @FXML
-    public Label itemDetailText;
+    private Label itemDetailText;
     // --- //
     @FXML
-    public ListView<String> characters;
+    private ListView<String> characters;
     @FXML
-    public ListView<String> starterWands;
+    private ListView<String> starterWands;
     @FXML
-    public ListView<String> spells;
+    private ListView<String> spells;
     @FXML
-    public TreeView<String> spellDetails;
+    private TreeView<String> spellDetails;
 
     // --- //
     @FXML
-    public ImageView bruh;
+    private ImageView bruh;
     @FXML
-    public ListView<String> shopTable;
+    private ListView<String> shopTable;
     @FXML
-    public Label shopItemDesc;
+    private Label shopItemDesc;
     @FXML
-    public Button buyButton;
+    private Button buyButton;
     @FXML
-    public Label goldCounter;
+    private Label goldCounter;
+
+    @FXML
+    private RadioButton rd1;
+    @FXML
+    private RadioButton rd2;
+    @FXML
+    private RadioButton rd3;
+    @FXML
+    private Button wandSwapper;
+    @FXML
+    private Label wndA;
+    @FXML
+    private Label wndB;
+    @FXML
+    private Label wndC;
+    @FXML
+    private Label currWnd;
+    @FXML
+    private AnchorPane battleManagement;
 
     private ShopItem currentShopItem;
     private ArrayList<ShopItem> listOfItems = new ArrayList<>();
@@ -158,7 +176,6 @@ public class HelloController {
             // System.out.println(shopTable.getColumns().get(0));
             bruh.setImage(new Image(
                     new FileInputStream(new File("src\\main\\resources\\com\\thecodercat418\\MBG\\shopkeeper.jpg"))));
-
         } catch (FileNotFoundException e) {
             // Womp Womp
         }
@@ -166,17 +183,17 @@ public class HelloController {
             miniScreenSwitcher(newValue.intValue());
         });
         shopTable.getSelectionModel().selectedIndexProperty().addListener((_, _, c) -> {
-            if(c.intValue() == -1){
+            if (c.intValue() == -1) {
                 return;
             }
-            shopItemDesc.setText(listOfItems.get(c.intValue()).item.description);
+            shopItemDesc.setText(listOfItems.get(c.intValue()).getItem().getDescription());
             currentShopItem = listOfItems.get(c.intValue());
             buyButton.setDisable(false);
-            if(currentShopItem.price>currentPlayer.getCoins()){
+            if (currentShopItem.getPrice() > currentPlayer.getCoins()) {
                 buyButton.setDisable(true);
             }
         });
-        battleSlider.setValue(3.0);
+
         currentEnemy = new BaseCharacter("Enemy");
 
         currentPlayer = new MagicCharacter();
@@ -188,15 +205,20 @@ public class HelloController {
         currentPlayer.items.add(new Item("Test 5", null, "d"));
         currentPlayer.items.add(new Item("Test 6", null, "e"));
 
-        listOfItems.add(new ShopItem(new Item("a", null,"1"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("a", null, "1"), 10, 3));
         listOfItems.add(new ShopItem(new Item("b", null, "2"), 10, 3));
         listOfItems.add(new ShopItem(new Item("c", null, "3"), 10, 3));
         listOfItems.add(new ShopItem(new Item("d", null, "4"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("e", null,"5"), 10, 3));
+        listOfItems.add(new ShopItem(new Item("e", null, "5"), 10, 3));
 
         currentPlayer.changeCoins(500);
         // currentPlayer.items.add(new Item("Test 7", null));
         loadBattle(currentEnemy);
+
+    }
+
+    public void loadBattle(BaseCharacter enemy) {
+        battleSlider.setValue(4.0);
         currentCharacter = currentPlayer;
         updateBattle();
     }
@@ -226,6 +248,9 @@ public class HelloController {
         enemyHealth.setText(Integer.toString(currentEnemy.getHealth()));
         playerManaBar.setProgress((currentPlayer.getMana() + 0.0) / 10);
         playerMana.setText(Integer.toString(currentPlayer.getMana()));
+        wandSwapper.setDisable(currentPlayer.usedItem);
+        useItem.setDisable(currentPlayer.usedItem);
+        loadWands();
         loadActionTable();
         loadItemTable();
         loadShop();
@@ -245,7 +270,7 @@ public class HelloController {
             Spell currentSpell = currentPlayer.getCurrentWand().getSpells()[i];
             boolean cooldown = currentPlayer.getSpellEffectFromSpell(currentSpell) != null;
             boolean mana = currentPlayer.getMana() < currentSpell.getManaNeeded();
-            boolean locked = currentPlayer.getCurrentWand().getWandLevel() < currentSpell.getWandLevelNeeded();
+            boolean locked = currentPlayer.getCurrentWand().getLevel() < currentSpell.getWandLevelNeeded();
             Button button = null;
             Label label = null;
             switch (track) {
@@ -275,7 +300,7 @@ public class HelloController {
             }
             if (cooldown) {
                 label.setText("On Cooldown!\nTurns of cooldown left: "
-                        + currentPlayer.getSpellEffectFromSpell(currentSpell).remainingCooldown + "\n "
+                        + currentPlayer.getSpellEffectFromSpell(currentSpell).getRemainingCooldown() + "\n "
                         + currentPlayer.getSpellEffectFromSpell(currentSpell).hasEffect());
                 button.setDisable(true);
             }
@@ -312,7 +337,7 @@ public class HelloController {
     }
 
     public void loadItemDetails() {
-        itemDetailText.setText(currentItem.name + "\n\n" + currentItem.description);
+        itemDetailText.setText(currentItem.getName() + "\n\n" + currentItem.getDescription());
     }
 
     public void loadItemTable() {
@@ -330,7 +355,7 @@ public class HelloController {
                 itemPane.setLayoutX(114.0);
             }
 
-            Label name = new Label(item.name);
+            Label name = new Label(item.getName());
             name.setAlignment(Pos.CENTER);
             name.setLayoutX(6.0);
             name.setLayoutY(50.0);
@@ -349,7 +374,7 @@ public class HelloController {
                 for (Node node : b.getParent().getChildrenUnmodifiable()) {
                     if (node instanceof Label) {
                         for (Item itemb : currentPlayer.items) {
-                            if (((Label) node).getText().equals(itemb.name)) {
+                            if (((Label) node).getText().equals(itemb.getName())) {
                                 currentItem = itemb;
                                 loadItemDetails();
                                 return;
@@ -359,13 +384,7 @@ public class HelloController {
                 }
             });
 
-            if (currentCharacter.usedItem) {
-                select.setDisable(true);
-            } else {
-                select.setDisable(false);
-            }
-
-            ImageView imageView = new ImageView(item.image);
+            ImageView imageView = new ImageView(item.getImage());
             imageView.setFitHeight(41.0);
             imageView.setFitWidth(44.0);
             imageView.setLayoutX(29.0);
@@ -389,18 +408,19 @@ public class HelloController {
 
     public void loadShop() {
         goldCounter.setText("Gold: " + currentPlayer.getCoins());
-        shopTable.getItems().clear(); //I HAVE NO IDEA WHY THIS IS ERRORING PLEASE DISREGUARD.
+        shopTable.getItems().clear();
         for (ShopItem si : listOfItems) {
-            if(si.quatity<=0){
+            if (si.getQuatity() <= 0) {
                 continue;
             }
-            shopTable.getItems().add(si.item.name + " : Price: " + si.price + " : Quanity: " + si.quatity);
+            shopTable.getItems().add(si.getItem().getName() + " : Price: " + si.getPrice() + " : Quanity: " + si.getQuatity());
         }
     }
-    public void buyItem(){
-        currentPlayer.items.add(currentShopItem.item);
-        currentPlayer.changeCoins(-1*currentShopItem.price);
-        currentShopItem.quatity--;
+
+    public void buyItem() {
+        currentPlayer.items.add(currentShopItem.getItem());
+        currentPlayer.changeCoins(-1 * currentShopItem.getPrice());
+        currentShopItem.itemTaken();
         updateBattle();
     }
 
@@ -408,7 +428,7 @@ public class HelloController {
         if (currentCharacter.usedItem) {
             return;
         }
-        currentPlayer.addSpellEffect(currentItem.effect);
+        currentPlayer.addSpellEffect(currentItem.getEffect());
         for (Item item : currentPlayer.items) {
             if (currentItem.equals(item)) {
                 currentPlayer.items.remove(item);
@@ -420,13 +440,80 @@ public class HelloController {
         updateBattle();
     }
 
-    public void swapWands(){
-        
+    public void loadWands() {
+        rd1.setDisable(false);
+        rd2.setDisable(false);
+        rd3.setDisable(false);
+        ArrayList<Wand> wndsm = new ArrayList<>();
+        for (Wand w : currentPlayer.getWands()) {
+            if (w.equals(currentPlayer.getCurrentWand())) {
+                continue;
+            }
+            wndsm.add(w);
+        }
+        currWnd.setText(currentPlayer.getCurrentWand().getName());
+
+        int i;
+        for (i = 0; i < wndsm.size(); i++) {
+            switch (i) {
+                case 0:
+                    wndA.setText(wndsm.get(i).getName());
+                    break;
+                case 1:
+                    wndB.setText(wndsm.get(i).getName());
+                    break;
+                case 2:
+                    wndC.setText(wndsm.get(i).getName());
+                    break;
+            }
+        }
+        for (i = 0; i < 3; i++) {
+            switch (i) {
+                case 0:
+                    wndA.setText("Empty");
+                    rd1.setDisable(true);
+                    break;
+                case 1:
+                    wndB.setText("Empty");
+                    rd2.setDisable(true);
+                    break;
+                case 2:
+                    wndC.setText("Empty");
+                    rd3.setDisable(true);
+                    break;
+            }
+        }
+
     }
 
-    public void loadBattle(BaseCharacter enemy) {
-        enemyName.setText(enemy.getName());
-        currentEnemy = enemy;
+    public void swapWands(ActionEvent ae) {
+        if (currentPlayer.usedItem) {
+            return;
+        }
+        RadioButton rd;
+        if (rd1.isSelected()) {
+            rd = rd1;
+        } else if (rd2.isSelected()) {
+            rd = rd2;
+        } else {
+            rd = rd3;
+        }
+        for (int i = 0; i < rd.getParent().getChildrenUnmodifiable().size(); i++) {
+            if (rd.getParent().getChildrenUnmodifiable().get(i) instanceof Label) {
+                Label l = (Label) rd.getParent().getChildrenUnmodifiable().get(i);
+                for (Wand wnd : currentPlayer.getWands()) {
+                    if (wnd.getName().equals(l.getText())) {
+                        currentPlayer.equipWand(wnd);
+                        currentCharacter.usedItem = true;
+                    }
+                }
+            }
+        }
+        updateBattle();
+    }
+
+    public void loadBattleManager() {
+
     }
 
     // --- Menu/Character Selector --- //
@@ -445,13 +532,16 @@ public class HelloController {
         battleAbilities.setVisible(false);
         battleItems.setVisible(false);
         battleWands.setVisible(false);
+        battleManagement.setVisible(false);
         // Screen 1: Abilities
         if (screenId == 1) {
             battleAbilities.setVisible(true);
         } else if (screenId == 2) {
             battleItems.setVisible(true);
-        } else if(screenId == 3){
+        } else if (screenId == 3) {
             battleWands.setVisible(true);
+        } else if (screenId == 4) {
+            battleManagement.setVisible(true);
         }
     }
 }

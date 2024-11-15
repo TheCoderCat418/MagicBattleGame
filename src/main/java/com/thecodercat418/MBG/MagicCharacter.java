@@ -65,7 +65,7 @@ public class MagicCharacter extends BaseCharacter {
 
     public SpellEffect getSpellEffectFromSpell(Spell spell) {
         for (SpellEffect sp : getSpellEffects()) {
-            if (sp.originalSpell.equals(spell)) {
+            if (sp.getOriginalSpell().equals(spell)) {
                 return sp;
             }
         }
@@ -82,5 +82,9 @@ public class MagicCharacter extends BaseCharacter {
         if(mana>maxMana){
             mana = maxMana;
         }
+    }
+
+    public ArrayList<Wand> getWands() {
+        return wands;
     }
 }

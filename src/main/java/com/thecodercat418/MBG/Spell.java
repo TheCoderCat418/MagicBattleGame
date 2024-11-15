@@ -8,34 +8,29 @@ public class Spell {
     private int lastsFor;
     private RunningPlacement runningPlacement;
     private String damage;
-    private DamageTypes damageType;
-
+    private String SEDamage;
     private String defence;
-    private DamageTypes protectionType;
+    private String SEDefence;
 
     private boolean direct = true;
 
-    public Spell(String spellName, int wandLevelNeeded, int turnCooldown, int lastsFor, String damage,
-            DamageTypes damageType, String defence, DamageTypes protectionType, int manaNeeded,
-            RunningPlacement runningPlacement) {
+    public Spell(String spellName, int manaNeeded, int wandLevelNeeded, int turnCooldown, int lastsFor,
+            RunningPlacement runningPlacement, String damage, String SEDamage, String defence, String SEDefence) {
         this.spellName = spellName;
+        this.manaNeeded = manaNeeded;
         this.wandLevelNeeded = wandLevelNeeded;
         this.turnCooldown = turnCooldown;
-        this.damage = damage;
-        this.damageType = damageType;
         this.lastsFor = lastsFor;
-        this.defence = defence;
-        this.protectionType = protectionType;
-        this.manaNeeded = manaNeeded;
         this.runningPlacement = runningPlacement;
+        this.damage = damage;
+        this.SEDamage = SEDamage;
+        this.defence = defence;
+        this.SEDefence = SEDefence;
     }
-
-    
 
     public void setDirect(boolean direct) {
         this.direct = direct;
     }
-
 
     public String getSpellName() {
         return spellName;
@@ -65,16 +60,16 @@ public class Spell {
         return damage;
     }
 
-    public DamageTypes getDamageType() {
-        return damageType;
-    }
-
     public String getDefence() {
         return defence;
     }
 
-    public DamageTypes getProtectionType() {
-        return protectionType;
+    public String getSEDamage() {
+        return SEDamage;
+    }
+
+    public String getSEDefence() {
+        return SEDefence;
     }
 
     public boolean isDirect() {
