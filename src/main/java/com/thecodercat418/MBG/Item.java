@@ -1,6 +1,4 @@
-package com.thecodercat418.MBG.Items;
-
-import com.thecodercat418.MBG.SpellEffect;
+package com.thecodercat418.MBG;
 
 import javafx.scene.image.Image;
 

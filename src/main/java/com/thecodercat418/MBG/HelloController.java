@@ -5,12 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import com.thecodercat418.MBG.Items.Item;
-import com.thecodercat418.MBG.Items.PoisonPotion;
-import com.thecodercat418.MBG.Items.ShopItem;
-import com.thecodercat418.MBG.Wands.FireWand;
-import com.thecodercat418.MBG.Wands.Wand;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -22,6 +16,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -117,6 +112,8 @@ public class HelloController {
     private Label currWnd;
     @FXML
     private AnchorPane battleManagement;
+    @FXML
+    private TabPane tp;
 
     private ShopItem currentShopItem;
     private ArrayList<ShopItem> listOfItems = new ArrayList<>();
@@ -126,6 +123,7 @@ public class HelloController {
     private BaseCharacter currentEnemy;
     private BaseCharacter currentCharacter;
     private Item currentItem;
+    private Wand sWand;
 
     private RunningPlacement STATE = RunningPlacement.BEFORE_TURN;
     private Turn setTurn = Turn.PLAYER;
@@ -193,32 +191,41 @@ public class HelloController {
                 buyButton.setDisable(true);
             }
         });
-
+        starterWands.getSelectionModel().selectedIndexProperty().addListener((_, _, c) -> {
+            if (c.intValue() == -1) {
+                return;
+            }
+            sWand = DataLoader.getAllWandPosiblities().get(c.intValue());
+            spells.getItems().clear();
+            for (Spell s : sWand.getSpells()) {
+                spells.getItems()
+                        .add(s.getSpellName() + " | DMG: " + s.getDamage() + " | DEF: " + s.getDefence()
+                                + " | Lasts For: " + s.getLastsFor() + " | Mana: " + s.getManaNeeded() + " | Cooldown: "
+                                + s.getTurnCooldown());
+            }
+        });
+        for (Wand wand : DataLoader.getAllWandPosiblities()) {
+            starterWands.getItems().add(wand.getName());
+        }
+        for (MagicCharacter mc : DataLoader.getAllMagicCharacters()) {
+            characters.getItems().add(mc.getName() + " | Health: " + mc.getHealth() + " | Mana: " + mc.getMana());
+        }
+        tp.getTabs().get(1).setDisable(true);
+        tp.getTabs().get(2).setDisable(true);
         currentEnemy = new BaseCharacter("Enemy");
 
-        currentPlayer = new MagicCharacter();
-        currentPlayer.addWand(new FireWand());
-        currentPlayer.items.add(new PoisonPotion());
-        currentPlayer.items.add(new Item("Test 2", null, "a"));
-        currentPlayer.items.add(new Item("Test 3", null, "b"));
-        currentPlayer.items.add(new Item("Test 4", null, "c"));
-        currentPlayer.items.add(new Item("Test 5", null, "d"));
-        currentPlayer.items.add(new Item("Test 6", null, "e"));
-
-        listOfItems.add(new ShopItem(new Item("a", null, "1"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("b", null, "2"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("c", null, "3"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("d", null, "4"), 10, 3));
-        listOfItems.add(new ShopItem(new Item("e", null, "5"), 10, 3));
-
-        currentPlayer.changeCoins(500);
-        // currentPlayer.items.add(new Item("Test 7", null));
-        loadBattle(currentEnemy);
-
+        listOfItems.addAll(DataLoader.getAllShopItemPosibilies());
     }
 
-    public void loadBattle(BaseCharacter enemy) {
+    public void loadBattle() {
+        tp.getTabs().get(1).setDisable(false);
+        tp.getTabs().get(2).setDisable(false);
+        tp.getSelectionModel().select(1);
+        tp.getTabs().get(0).setDisable(true);
         battleSlider.setValue(4.0);
+        currentPlayer = DataLoader.getAllMagicCharacters().get(0);
+        currentPlayer.addWand(sWand);
+        currentPlayer.changeCoins(500);
         currentCharacter = currentPlayer;
         updateBattle();
     }
@@ -257,8 +264,10 @@ public class HelloController {
     }
 
     public void enemyTurn() {
-        // AI Here
         gameStateChanged(true); // BEFORE_TURN -> BEFORE_ATTACK
+        int wandid = (int)(Math.random()*DataLoader.getAllWandPosiblities().size());
+        int spellid = (int)(Math.random()*DataLoader.getAllWandPosiblities().get(wandid).spells.size());
+        DataLoader.getAllWandPosiblities().get(wandid).castSpell(currentPlayer, DataLoader.getAllWandPosiblities().get(wandid).spells.get(spellid));
         gameStateChanged(true); // BEFORE_ATTACK -> AFTER_ATTACK
         gameStateChanged(true); // AFTER_ATTACK -> AFTER_TURN
         gameStateChanged(true); // AFTER_TURN -> SIDESWAP -> BEFORE_TURN
@@ -409,11 +418,12 @@ public class HelloController {
     public void loadShop() {
         goldCounter.setText("Gold: " + currentPlayer.getCoins());
         shopTable.getItems().clear();
-        for (ShopItem si : listOfItems) {
+        for (ShopItem si : DataLoader.getAllShopItemPosibilies()) {
             if (si.getQuatity() <= 0) {
                 continue;
             }
-            shopTable.getItems().add(si.getItem().getName() + " : Price: " + si.getPrice() + " : Quanity: " + si.getQuatity());
+            shopTable.getItems()
+                    .add(si.getItem().getName() + " : Price: " + si.getPrice() + " : Quanity: " + si.getQuatity());
         }
     }
 
@@ -512,9 +522,6 @@ public class HelloController {
         updateBattle();
     }
 
-    public void loadBattleManager() {
-
-    }
 
     // --- Menu/Character Selector --- //
     public void menuInitialize() {

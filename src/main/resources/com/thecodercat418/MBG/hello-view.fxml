@@ -10,14 +10,13 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.QuadCurve?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
+<TabPane fx:id="tp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.thecodercat418.MBG.HelloController">
    <tabs>
       <Tab text="Menu">
          <content>
@@ -26,11 +25,10 @@
                   <ListView fx:id="starterWands" layoutX="214.0" layoutY="83.0" prefHeight="200.0" prefWidth="172.0" />
                   <ListView fx:id="characters" layoutX="14.0" layoutY="83.0" prefHeight="200.0" prefWidth="200.0" />
                   <ListView fx:id="spells" layoutX="386.0" layoutY="83.0" prefHeight="200.0" prefWidth="200.0" />
-                  <Button layoutX="188.0" layoutY="490.0" mnemonicParsing="false" text="Start Battle" />
+                  <Button layoutX="188.0" layoutY="490.0" mnemonicParsing="false" onAction="#loadBattle" text="Start Battle" />
                   <Label layoutX="86.0" layoutY="66.0" text="Characters" />
                   <Label layoutX="263.0" layoutY="66.0" text="Starter Wands" />
                   <Label layoutX="471.0" layoutY="66.0" text="Spells" />
-                  <TreeView fx:id="spellDetails" layoutX="386.0" layoutY="315.0" prefHeight="200.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
          </content>
@@ -76,7 +74,7 @@
                   <ProgressBar fx:id="playerManaBar" layoutX="24.0" layoutY="76.0" prefWidth="200.0" progress="0.1" style="-fx-accent: purple;" />
                   <Label fx:id="playerMana" layoutX="24.0" layoutY="59.0" text="Mana:" />
                   <Label layoutX="30.0" layoutY="102.0" text="You" />
-                  <Label fx:id="enemyName" layoutX="375.0" layoutY="410.0" text="PLAYERNAME" />
+                  <Label fx:id="enemyName" layoutX="375.0" layoutY="410.0" text="THE MASTER OF THE WORLD" />
                   <Label fx:id="statusBar" layoutX="300.0" layoutY="24.0" prefHeight="16.0" prefWidth="283.0" />
                   <AnchorPane fx:id="battleItems" layoutX="41.0" layoutY="317.0" prefHeight="236.0" prefWidth="227.0" scaleShape="false" style="-fx-border-radius: 1;">
                      <children>
@@ -157,11 +155,6 @@
                      </ImageView>
                   <ListView fx:id="shopTable" layoutX="14.0" layoutY="20.0" prefHeight="535.0" prefWidth="283.0" />
                </children></AnchorPane>
-         </content>
-      </Tab>
-      <Tab text="Manual">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
    </tabs>

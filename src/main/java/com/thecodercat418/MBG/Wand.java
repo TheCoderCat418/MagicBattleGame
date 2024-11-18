@@ -1,7 +1,4 @@
-package com.thecodercat418.MBG.Wands;
-
-import com.thecodercat418.MBG.BaseCharacter;
-import com.thecodercat418.MBG.Spell;
+package com.thecodercat418.MBG;
 
 import java.util.ArrayList;
 

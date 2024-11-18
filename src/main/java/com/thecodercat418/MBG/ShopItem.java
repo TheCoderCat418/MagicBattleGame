@@ -1,4 +1,4 @@
-package com.thecodercat418.MBG.Items;
+package com.thecodercat418.MBG;
 
 public class ShopItem {
     private Item item;

@@ -1,16 +1,14 @@
 package com.thecodercat418.MBG;
 
-import com.thecodercat418.MBG.Items.Item;
-
 import java.util.ArrayList;
 
 public class BaseCharacter {
     private int maxHealth = 100;
-    private int health = 100;
+    private int health = maxHealth;
     private int defence = 0;
     private boolean dead = false;
     private String name;
-    private int coins = 0;
+    private int coins = 100;
     private ArrayList<SpellEffect> spellEffects = new ArrayList<>();
     ArrayList<Item> items = new ArrayList<>();
     public boolean usedItem = false;
@@ -34,6 +32,8 @@ public class BaseCharacter {
                 health = health - Integer.parseInt(healthModifier.substring(1)) + defence;
                 defence = 0;
             }
+        }else if(healthModifier.charAt(0) == '+' && !dead){
+            health += Integer.parseInt(healthModifier.substring(1));
         }
 
         if (health <= 0) {

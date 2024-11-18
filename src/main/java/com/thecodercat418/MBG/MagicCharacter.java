@@ -1,7 +1,5 @@
 package com.thecodercat418.MBG;
 
-import com.thecodercat418.MBG.Wands.Wand;
-
 import java.util.ArrayList;
 
 public class MagicCharacter extends BaseCharacter {
@@ -10,10 +8,13 @@ public class MagicCharacter extends BaseCharacter {
     private int manaGain = 1;
     private ArrayList<Wand> wands = new ArrayList<>();
     private Wand currentWand;
+    private int oManaGain = manaGain;
     
 
-    public MagicCharacter() {
-        super("You");
+    public MagicCharacter(String name, int health, int defence, int mana, int manaGain) {
+        super(name, health, defence);
+        this.mana = mana;
+        this.manaGain = manaGain;
     }
 
     public boolean addWand(Wand wand) {
@@ -60,6 +61,7 @@ public class MagicCharacter extends BaseCharacter {
             addSpellEffect(new SpellEffect(currentSpell, currentSpell.getRunningPlacement()));
         }
         mana = mana - currentSpell.getManaNeeded();
+        manaGain = 0;
         return 1;
     }
 
@@ -78,6 +80,10 @@ public class MagicCharacter extends BaseCharacter {
 
     @Override
     public void BEFORE_TURN(boolean attacker) {
+        if(manaGain==0){
+            manaGain = oManaGain;
+            return;
+        }
         mana += manaGain;
         if(mana>maxMana){
             mana = maxMana;
